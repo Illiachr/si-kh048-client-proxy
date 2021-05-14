@@ -1,0 +1,76 @@
+{
+    "configurations": [
+        {
+            "name": "test",
+            "policies": [
+                {
+                    "name": "AM-Set-Headers.xml",
+                    "tokens": [
+                        {
+                            "xpath": "/AssignMessage/Set/Headers/Header[@name='ENV']",
+                            "value": "test"
+                        }
+                    ]
+                }
+            ],
+            "proxies": [
+                {
+                    "name": "default.xml",
+                    "tokens": [
+                        {
+                            "xpath": "/ProxyEndpoint/HTTPProxyConnection/BasePath",
+                            "value": "/sicp/api/v1"
+                        }
+                    ]
+                }
+            ],
+            "targets": [
+                {
+                    "name": "default.xml",
+                    "tokens": [
+                        {
+                            "xpath": "/TargetEndpoint/HTTPTargetConnection/URL",
+                            "value": "https://insurance-client-api.herokuapp.com/api/v2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "prod",
+            "policies": [
+                {
+                    "name": "AM-Set-Headers.xml",
+                    "tokens": [
+                        {
+                            "xpath": "/AssignMessage/Set/Headers/Header[@name='ENV']",
+                            "value": "prod"
+                        }
+                    ]
+                }
+            ],
+            "proxies": [
+                {
+                    "name": "default.xml",
+                    "tokens": [
+                        {
+                            "xpath": "/ProxyEndpoint/HTTPProxyConnection/BasePath",
+                            "value": "/sicp/api/v1"
+                        }
+                    ]
+                }
+            ],
+            "targets": [
+                {
+                    "name": "default.xml",
+                    "tokens": [
+                        {
+                            "xpath": "/TargetEndpoint/HTTPTargetConnection/URL",
+                            "value": "https://insurance-client-api.herokuapp.com/api/v2"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

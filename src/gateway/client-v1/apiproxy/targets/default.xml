@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TargetEndpoint name="default">
+    <Description/>
+    <FaultRules>
+        <FaultRule name="FailedToVerifyAccessToken">
+            <Step>
+                <Name>RF-401AccessTokenInValid</Name>
+                <Condition>oauthV2.OAuthV2-VerifyAccessToken.failed = true</Condition>
+            </Step>
+        </FaultRule>
+    </FaultRules>
+    <PreFlow name="PreFlow">
+        <Request>
+            <Step>
+                <Name>JS-TargetRewrite</Name>
+                <Condition>((proxy.pathsuffix MatchesPath "/clients/{clientId}/balance") and (request.verb = "PATCH")</Condition>
+            </Step>
+        </Request>
+        <Response/>
+    </PreFlow>
+    <PostFlow name="PostFlow">
+        <Request/>
+        <Response/>
+    </PostFlow>
+    <Flows>
+        <Flow name="getClientById">
+            <Description>Get Client by ID</Description>
+            <Request>
+                <Step>
+                    <Name>OAuthV2-VerifyAccessToken</Name>
+                </Step>
+                <Step>
+                    <Name>EV-ExtractEntityId</Name>
+                </Step>         
+                <Step>
+                    <Condition>urirequest.id != accesstoken.CUID</Condition>
+                    <Name>RF-403NotPremitted</Name>
+                </Step>
+                <Step>
+                    <Name>KVM-GetPrivateKey</Name>
+                </Step>
+                <Step>
+                    <Name>JWT-RS256Generate</Name>
+                </Step>
+                <Step>
+                    <Name>AM-AssignProxyURL</Name>
+                </Step>
+                <Step>
+                    <Name>AM-SetGetClientByIdReqInfo</Name>
+                </Step>
+                <Step>
+                    <Name>RC-ClientsCache</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>JS-AddResourceLink</Name>
+                </Step>
+                <Step>
+                    <Name>RC-ClientsCache</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/clients/{clientId}" or proxy.pathsuffix MatchesPath "/clients/{clientId}/") and (request.verb = "GET")</Condition>
+        </Flow>
+        <Flow name="buyPackage">
+            <Description>Buy package for client</Description>
+            <Request>
+                <Step>
+                    <Name>OAuthV2-VerifyAccessToken</Name>
+                </Step>
+                <Step>
+                    <Name>EV-ExtractEntityId</Name>
+                </Step>         
+                <Step>
+                    <Condition>urirequest.id != accesstoken.CUID</Condition>
+                    <Name>RF-403NotPremitted</Name>
+                </Step>
+                <Step>
+                    <Name>KVM-GetPrivateKey</Name>
+                </Step>
+                <Step>
+                    <Name>JWT-RS256Generate</Name>
+                </Step>
+                <Step>
+                    <Name>AM-AssignProxyURL</Name>
+                </Step>
+                <Step>
+                    <Name>AM-SetBuyPackageReqInfo</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>JS-AddResourceLink</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/clients/{clientId}/package" or proxy.pathsuffix MatchesPath "/clients/{clientId}/package/") and (request.verb = "PATCH")</Condition>
+        </Flow>
+    </Flows>
+    <HTTPTargetConnection>
+        <Properties/>
+        <!-- <URL>https://replaced_by_config_json</URL> -->
+        <LoadBalancer>
+            <Server name="sicp-client-service"/>
+        </LoadBalancer>
+        <Path>{target-path}</Path>
+    </HTTPTargetConnection>
+</TargetEndpoint>

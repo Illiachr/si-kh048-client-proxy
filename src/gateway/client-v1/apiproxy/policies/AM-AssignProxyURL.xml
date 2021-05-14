@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="true" enabled="true" name="AM-AssignProxyURL">
+    <DisplayName>AM-AssignProxyURL</DisplayName>
+    <AssignVariable>
+        <Name>req_scheme</Name>
+        <Ref>client.scheme</Ref>
+    </AssignVariable>
+    <AssignVariable>
+        <Name>proxy_host</Name>
+        <Ref>request.header.host</Ref>
+    </AssignVariable>
+    <AssignVariable>
+        <Name>proxy_base_path</Name>
+        <Ref>proxy.basepath</Ref>
+    </AssignVariable>
+</AssignMessage>

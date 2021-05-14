@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="default">
+    <Description/>
+    <FaultRules>
+        <FaultRule name="JSONThreat">
+            <Condition>jsonattack.JTP-Protect.failed == true</Condition>
+            <Step>
+                <Condition>fault.name Matches "ExecutionFailed"</Condition>
+                <Name>AM-400JSONThreat</Name>
+            </Step>
+        </FaultRule>
+        <FaultRule name="FailedToResolveAPIKey">
+            <Step>
+                <Name>RF-401APIKey</Name>
+                <Condition>(fault.name Matches "FailedToResolveAPIKey") or  (fault.name Matches "InvalidApiKey")</Condition>
+            </Step>
+        </FaultRule>
+    </FaultRules>
+    <DefaultFaultRule>
+        <Step>
+            <Condition>request.header.Origin != null</Condition>
+            <Name>AM-SetCORSHeader</Name>
+        </Step>
+        <AlwaysEnforce>true</AlwaysEnforce>
+    </DefaultFaultRule>
+    <PreFlow name="PreFlow">
+        <Request>
+            <Step>
+                <Condition>request.verb == "OPTIONS" AND request.header.Origin != null</Condition>
+                <Name>RF-PreflightCORS</Name>
+            </Step>
+            <Step>
+                <Name>SA-SpikeArrest</Name>
+            </Step>
+            <Step>
+                <Name>VAK-VerifyKey</Name>
+            </Step>
+            <Step>
+                <Name>AM-StripAPIKey</Name>
+            </Step>
+            <Step>
+                <Name>Q-EnforceQuota</Name>
+            </Step>
+        </Request>
+        <Response/>
+    </PreFlow>
+    <PostFlow name="PostFlow">
+        <Request/>
+        <Response>
+            <Step>
+                <Condition>request.header.Origin != null</Condition>
+                <Name>AM-SetCORSHeader</Name>
+            </Step>
+        </Response>
+    </PostFlow>
+    <Flows>
+        <Flow name="getBasePackagesList">
+            <Description>List of base Packages</Description>
+            <Request>
+                <Step>
+                    <Name>RC-CatalogCache</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>RC-CatalogCache</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/catalog/packages/base") and (request.verb = "GET")</Condition>
+        </Flow>
+        <Flow name="getProductsList">
+            <Description>List of Products</Description>
+            <Request/>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/catalog/products") and (request.verb = "GET")</Condition>
+        </Flow>
+        <Flow name="getClientsList">
+            <Description>List of Clients</Description>
+            <Request/>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/clients" or proxy.pathsuffix MatchesPath "/clients/") and (request.verb = "GET")</Condition>
+        </Flow>
+        <Flow name="addClient">
+            <Description>Add new client</Description>
+            <Request/>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/clients" or proxy.pathsuffix MatchesPath "/clients/") and (request.verb = "POST")</Condition>
+        </Flow>
+        <Flow name="getClientInfo">
+            <Description>Get all info about Client</Description>
+            <Request>
+                <Step>
+                    <Name>FC-JWTFlow</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/clients/{clientId}/info" or proxy.pathsuffix MatchesPath "/clients/{clientId}/info/") and (request.verb = "GET")</Condition>
+        </Flow>
+        <Flow name="deleteClient">
+            <Description>Delete existing Client</Description>
+            <Request/>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/clients/{clientId}" or proxy.pathsuffix MatchesPath "/clients/{clientId}/") and (request.verb = "DELETE")</Condition>
+        </Flow>
+        <Flow name="patchClient">
+            <Description>Partially updates Clients data</Description>
+            <Request>
+                <Step>
+                    <Name>FC-JWTFlow</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/clients/{clientId}" or proxy.pathsuffix MatchesPath "/clients/{clientId}/") and (request.verb = "PATCH")</Condition>
+        </Flow>
+        <Flow name="balanceTopUp">
+            <Description>Top up balance for a client specified with "id"</Description>
+            <Request>
+                <Step>
+                    <Name>FC-JWTFlow</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>JS-AddResourceLink</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/clients/{clientId}/balance" or proxy.pathsuffix MatchesPath "/clients/{clientId}/balance/") and (request.verb = "PATCH")</Condition>
+        </Flow>
+        <Flow name="404NotFound">
+            <Description>404NotFound</Description>
+            <Request>
+                <Step>
+                    <Name>RF-404NotFound</Name>
+                </Step>
+            </Request>
+            <Response/>
+        </Flow>
+    </Flows>
+    <HTTPProxyConnection>
+        <BasePath>/replaced_by_config_json</BasePath>
+        <Properties/>
+        <VirtualHost>secure</VirtualHost>
+    </HTTPProxyConnection>
+    <RouteRule name="default">
+        <TargetEndpoint>default</TargetEndpoint>
+    </RouteRule>
+</ProxyEndpoint>

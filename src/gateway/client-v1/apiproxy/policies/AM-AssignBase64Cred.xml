@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="true" enabled="true" name="AM-AssignBase64Cred">
+    <DisplayName>AM-AssignBase64Cred</DisplayName>
+    <AssignVariable>
+        <Name>clientIdBase64</Name>
+        <Ref>encodeBase64(client_id)</Ref>
+    </AssignVariable>
+    <AssignVariable>
+        <Name>clientsecretBase64</Name>
+        <Ref>encodeBase64(client_secret)</Ref>
+    </AssignVariable>
+</AssignMessage>

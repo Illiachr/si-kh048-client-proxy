@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ExtractVariables async="false" continueOnError="false" enabled="true" name="EV-ExtractEntityId">
+    <URIPath>
+        <Pattern ignoreCase="true">/{entity}/{id}</Pattern>
+        <Pattern ignoreCase="true">/{entity}/{id}/**</Pattern>
+    </URIPath>
+    <VariablePrefix>urirequest</VariablePrefix>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</ExtractVariables>

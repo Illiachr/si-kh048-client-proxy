@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<KeyValueMapOperations mapIdentifier="jwt-key" async="false" continueOnError="false" enabled="true" name="KVM-GetPrivateKey">
+  <DisplayName>KVM-GetPrivateKey</DisplayName>
+  <ExpiryTimeInSecs>60</ExpiryTimeInSecs>
+  <Scope>environment</Scope>
+  <Get assignTo="private.privatekey">
+    <Key>
+      <Parameter>rsa_private_key</Parameter>
+    </Key>
+  </Get>
+</KeyValueMapOperations>

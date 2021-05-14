@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<VerifyJWT name="JWT-RS256Verify">
+    <Algorithm>RS256</Algorithm>
+    <Source>private.jwt.token</Source>
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+    <PublicKey>
+        <Value ref="private.publickey"/>
+    </PublicKey>
+</VerifyJWT>
+

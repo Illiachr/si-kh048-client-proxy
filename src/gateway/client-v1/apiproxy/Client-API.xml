@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="1" name="Client-API">
+    <Basepaths>/api/v2</Basepaths>
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <Description>Target service endpoint</Description>
+    <DisplayName>Client-API</DisplayName>
+    <Policies>
+    </Policies>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources/>
+    <Spec/>
+    <TargetServers/>
+    <TargetEndpoints>
+        <TargetEndpoint>default</TargetEndpoint>
+    </TargetEndpoints>
+</APIProxy>
