@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AM-SetGetBasePackagesListReqInfo">
+    <DislplayName>AM-SetGetBasePackagesListReqInfo</DislplayName>
+	<Properties/>
+    <AssignVariable>
+		<Name>target-path</Name>
+		<Template><![CDATA[/api/v2/catalog/packages/base]]></Template>
+	</AssignVariable>
+    <AssignVariable>
+		<Name>target.copy.pathsuffix</Name>
+		<Value>false</Value>
+	</AssignVariable>
+    <Copy source="request">
+        <Verb>true</Verb>
+    </Copy>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="true" transport="http" type="request"/>
+</AssignMessage>

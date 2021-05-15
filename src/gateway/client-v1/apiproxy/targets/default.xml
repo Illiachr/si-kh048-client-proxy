@@ -11,10 +11,10 @@
     </FaultRules>
     <PreFlow name="PreFlow">
         <Request>
-            <Step>
+            <!-- <Step>
                 <Name>JS-TargetRewrite</Name>
                 <Condition>((proxy.pathsuffix MatchesPath "/clients/{clientId}/balance") and (request.verb = "PATCH")</Condition>
-            </Step>
+            </Step> -->
         </Request>
         <Response/>
     </PreFlow>
@@ -23,30 +23,11 @@
         <Response/>
     </PostFlow>
     <Flows>
-        <Flow name="getClientById">
-            <Description>Get Client by ID</Description>
+        <Flow name="getBasePackagesList">
+            <Description>List of base Packages</Description>
             <Request>
                 <Step>
-                    <Name>OAuthV2-VerifyAccessToken</Name>
-                </Step>
-                <Step>
-                    <Name>EV-ExtractEntityId</Name>
-                </Step>         
-                <Step>
-                    <Condition>urirequest.id != accesstoken.CUID</Condition>
-                    <Name>RF-403NotPremitted</Name>
-                </Step>
-                <Step>
-                    <Name>KVM-GetPrivateKey</Name>
-                </Step>
-                <Step>
-                    <Name>JWT-RS256Generate</Name>
-                </Step>
-                <Step>
-                    <Name>AM-AssignProxyURL</Name>
-                </Step>
-                <Step>
-                    <Name>AM-SetGetClientByIdReqInfo</Name>
+                    <Name>AM-SetGetBasePackagesListReqInfo</Name>
                 </Step>
                 <Step>
                     <Name>RC-ClientsCache</Name>
@@ -54,26 +35,27 @@
             </Request>
             <Response>
                 <Step>
-                    <Name>JS-AddResourceLink</Name>
-                </Step>
-                <Step>
                     <Name>RC-ClientsCache</Name>
                 </Step>
             </Response>
-            <Condition>(proxy.pathsuffix MatchesPath "/clients/{clientId}" or proxy.pathsuffix MatchesPath "/clients/{clientId}/") and (request.verb = "GET")</Condition>
+            <Condition>(proxy.pathsuffix MatchesPath "/catalog/packages/base") and (request.verb = "GET")</Condition>
         </Flow>
-        <Flow name="buyPackage">
-            <Description>Buy package for client</Description>
+        <Flow name="getProductsList">
+            <Description>List of Products</Description>
             <Request>
                 <Step>
-                    <Name>OAuthV2-VerifyAccessToken</Name>
+                    <Name>AM-SetGetProductsListReqInfo</Name>
                 </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/catalog/products") and (request.verb = "GET")</Condition>
+        </Flow>
+        <Flow name="getClientsList">
+            <Description>List of Clients</Description>
+            <Request>
                 <Step>
-                    <Name>EV-ExtractEntityId</Name>
-                </Step>         
-                <Step>
-                    <Condition>urirequest.id != accesstoken.CUID</Condition>
-                    <Name>RF-403NotPremitted</Name>
+                    <Condition>accesstoken.ROLE != "admin"</Condition>
+                    <Name>RF-403NoPremission</Name>
                 </Step>
                 <Step>
                     <Name>KVM-GetPrivateKey</Name>
@@ -82,8 +64,66 @@
                     <Name>JWT-RS256Generate</Name>
                 </Step>
                 <Step>
-                    <Name>AM-AssignProxyURL</Name>
+                    <Name>AM-SetGetClientsListReqInfo</Name>
+                    <Condition>urirequest.filter = null</Condition>
                 </Step>
+                <Step>
+                    <Name>AM-SetGetClientsFilteredListReqInfo</Name>
+                    <Condition>urirequest.filter != null</Condition>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/clients" or proxy.pathsuffix MatchesPath "/clients/") and (request.verb = "GET")</Condition>
+        </Flow>
+        <Flow name="getClientById">
+            <Description>Get Client by ID</Description>
+            <Request>
+                <!-- <Step>
+                    <Name>OAuthV2-VerifyAccessToken</Name>
+                </Step> -->
+                <Step>
+                    <Name>EV-ExtractReqParams</Name>
+                </Step>         
+                <Step>
+                    <Condition>urirequest.id != accesstoken.CUID</Condition>
+                    <Name>RF-403NoPremission</Name>
+                </Step>
+                <Step>
+                    <Name>FC-JWTGenerateRS256Flow</Name>
+                </Step>
+                <!-- <Step>
+                    <Name>AM-AssignProxyURL</Name>
+                </Step> -->
+                <Step>
+                    <Name>AM-SetGetClientByIdReqInfo</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>JS-AddResourceLink</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/clients/{clientId}" or proxy.pathsuffix MatchesPath "/clients/{clientId}/") and (request.verb = "GET")</Condition>
+        </Flow>
+        <Flow name="buyPackage">
+            <Description>Buy package for client</Description>
+            <Request>
+                <!-- <Step>
+                    <Name>OAuthV2-VerifyAccessToken</Name>
+                </Step> -->
+                <!-- <Step>
+                    <Name>EV-ExtractEntityId</Name>
+                </Step>          -->
+                <Step>
+                    <Condition>urirequest.id != accesstoken.CUID</Condition>
+                    <Name>RF-403NoPremission</Name>
+                </Step>
+                <Step>
+                    <Name>FC-JWTGenerateRS256Flow</Name>
+                </Step>
+                <!-- <Step>
+                    <Name>AM-AssignProxyURL</Name>
+                </Step> -->
                 <Step>
                     <Name>AM-SetBuyPackageReqInfo</Name>
                 </Step>
@@ -94,6 +134,115 @@
                 </Step>
             </Response>
             <Condition>(proxy.pathsuffix MatchesPath "/clients/{clientId}/package" or proxy.pathsuffix MatchesPath "/clients/{clientId}/package/") and (request.verb = "PATCH")</Condition>
+        </Flow>
+        <Flow name="addClient">
+            <Description>Add new client</Description>
+            <Request>
+                <!-- <Step>
+                    <Name>OAuthV2-VerifyAccessToken</Name>
+                </Step> -->
+                <Step>
+                    <Name>FC-JWTGenerateRS256Flow</Name>
+                </Step>
+                <!-- <Step>
+                    <Name>AM-AssignProxyURL</Name>
+                </Step> -->
+                <Step>
+                    <Name>AM-SetAddClientReqInfo</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/clients" or proxy.pathsuffix MatchesPath "/clients/") and (request.verb = "POST")</Condition>
+        </Flow>
+        <Flow name="getClientInfo">
+            <Description>Get all info about Client</Description>
+            <Request>
+                <Step>
+                    <Condition>urirequest.id != accesstoken.CUID</Condition>
+                    <Name>RF-403NoPremission</Name>
+                </Step>
+                <Step>
+                    <Name>FC-JWTGenerateRS256Flow</Name>
+                </Step>
+                <!-- <Step>
+                    <Name>AM-AssignProxyURL</Name>
+                </Step> -->
+                <Step>
+                    <Name>AM-SetGetClientInfoReqInfo</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/clients/{clientId}/info" or proxy.pathsuffix MatchesPath "/clients/{clientId}/info/") and (request.verb = "GET")</Condition>
+        </Flow>
+        <Flow name="deleteClient">
+            <Description>Delete existing Client</Description>
+            <Request>
+                <Step>
+                    <Condition>(urirequest.id != accesstoken.CUID) and (accesstoken.ROLE != "admin")</Condition>
+                    <Name>RF-403NoPremission</Name>
+                </Step>
+                <Step>
+                    <Name>FC-JWTGenerateRS256Flow</Name>
+                </Step>
+                <!-- <Step>
+                    <Name>AM-AssignProxyURL</Name>
+                </Step> -->
+                <Step>
+                    <Name>AM-SetDeleteClientReqInfo</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/clients/{clientId}" or proxy.pathsuffix MatchesPath "/clients/{clientId}/") and (request.verb = "DELETE")</Condition>
+        </Flow>
+        <Flow name="patchClient">
+            <Description>Partially updates Clients data</Description>
+            <Request>
+                <!-- <Step>
+                    <Name>EV-ExtractEntityId</Name>
+                </Step>          -->
+                <Step>
+                    <Condition>(urirequest.id != accesstoken.CUID) and (accesstoken.ROLE != "admin")</Condition>
+                    <Name>RF-403NoPremission</Name>
+                </Step>
+                <Step>
+                    <Name>FC-JWTGenerateRS256Flow</Name>
+                </Step>
+                <!-- <Step>
+                    <Name>AM-AssignProxyURL</Name>
+                </Step> -->
+                <Step>
+                    <Name>AM-SetPatchClientReqInfo</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/clients/{clientId}" or proxy.pathsuffix MatchesPath "/clients/{clientId}/") and (request.verb = "PATCH")</Condition>
+        </Flow>
+        <Flow name="balanceTopUp">
+            <Description>Top up balance for a client specified with "id"</Description>
+            <Request>
+                <!-- <Step>
+                    <Name>EV-ExtractEntityId</Name>
+                </Step>          -->
+                <Step>
+                    <Condition>(urirequest.id != accesstoken.CUID) and (accesstoken.ROLE != "admin")</Condition>
+                    <Name>RF-403NoPremission</Name>
+                </Step>
+                <Step>
+                    <Name>FC-JWTGenerateRS256Flow</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>JS-AddResourceLink</Name>
+                </Step>
+                <!-- <Step>
+                    <Name>AM-AssignProxyURL</Name>
+                </Step> -->
+                <Step>
+                    <Name>AM-SetBalanceTopupReqInfo</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/clients/{clientId}/balance" or proxy.pathsuffix MatchesPath "/clients/{clientId}/balance/") and (request.verb = "PATCH")</Condition>
         </Flow>
     </Flows>
     <HTTPTargetConnection>

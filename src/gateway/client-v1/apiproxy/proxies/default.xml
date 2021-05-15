@@ -36,10 +36,17 @@
                 <Name>VAK-VerifyKey</Name>
             </Step>
             <Step>
-                <Name>AM-StripAPIKey</Name>
+                <Name>OAuthV2-VerifyAccessToken</Name>
+                <Condition>(proxy.pathsuffix !MatchesPath "/catalog/packages/base" or proxy.pathsuffix !MatchesPath "/catalog/products")</Condition>
             </Step>
             <Step>
                 <Name>Q-EnforceQuota</Name>
+            </Step>
+            <Step>
+                <Name>EV-ExtractReqParams</Name>
+            </Step>
+            <Step>
+                <Name>AM-AssignProxyURL</Name>
             </Step>
         </Request>
         <Response/>
@@ -54,78 +61,6 @@
         </Response>
     </PostFlow>
     <Flows>
-        <Flow name="getBasePackagesList">
-            <Description>List of base Packages</Description>
-            <Request>
-                <Step>
-                    <Name>RC-CatalogCache</Name>
-                </Step>
-            </Request>
-            <Response>
-                <Step>
-                    <Name>RC-CatalogCache</Name>
-                </Step>
-            </Response>
-            <Condition>(proxy.pathsuffix MatchesPath "/catalog/packages/base") and (request.verb = "GET")</Condition>
-        </Flow>
-        <Flow name="getProductsList">
-            <Description>List of Products</Description>
-            <Request/>
-            <Response/>
-            <Condition>(proxy.pathsuffix MatchesPath "/catalog/products") and (request.verb = "GET")</Condition>
-        </Flow>
-        <Flow name="getClientsList">
-            <Description>List of Clients</Description>
-            <Request/>
-            <Response/>
-            <Condition>(proxy.pathsuffix MatchesPath "/clients" or proxy.pathsuffix MatchesPath "/clients/") and (request.verb = "GET")</Condition>
-        </Flow>
-        <Flow name="addClient">
-            <Description>Add new client</Description>
-            <Request/>
-            <Response/>
-            <Condition>(proxy.pathsuffix MatchesPath "/clients" or proxy.pathsuffix MatchesPath "/clients/") and (request.verb = "POST")</Condition>
-        </Flow>
-        <Flow name="getClientInfo">
-            <Description>Get all info about Client</Description>
-            <Request>
-                <Step>
-                    <Name>FC-JWTFlow</Name>
-                </Step>
-            </Request>
-            <Response/>
-            <Condition>(proxy.pathsuffix MatchesPath "/clients/{clientId}/info" or proxy.pathsuffix MatchesPath "/clients/{clientId}/info/") and (request.verb = "GET")</Condition>
-        </Flow>
-        <Flow name="deleteClient">
-            <Description>Delete existing Client</Description>
-            <Request/>
-            <Response/>
-            <Condition>(proxy.pathsuffix MatchesPath "/clients/{clientId}" or proxy.pathsuffix MatchesPath "/clients/{clientId}/") and (request.verb = "DELETE")</Condition>
-        </Flow>
-        <Flow name="patchClient">
-            <Description>Partially updates Clients data</Description>
-            <Request>
-                <Step>
-                    <Name>FC-JWTFlow</Name>
-                </Step>
-            </Request>
-            <Response/>
-            <Condition>(proxy.pathsuffix MatchesPath "/clients/{clientId}" or proxy.pathsuffix MatchesPath "/clients/{clientId}/") and (request.verb = "PATCH")</Condition>
-        </Flow>
-        <Flow name="balanceTopUp">
-            <Description>Top up balance for a client specified with "id"</Description>
-            <Request>
-                <Step>
-                    <Name>FC-JWTFlow</Name>
-                </Step>
-            </Request>
-            <Response>
-                <Step>
-                    <Name>JS-AddResourceLink</Name>
-                </Step>
-            </Response>
-            <Condition>(proxy.pathsuffix MatchesPath "/clients/{clientId}/balance" or proxy.pathsuffix MatchesPath "/clients/{clientId}/balance/") and (request.verb = "PATCH")</Condition>
-        </Flow>
         <Flow name="404NotFound">
             <Description>404NotFound</Description>
             <Request>

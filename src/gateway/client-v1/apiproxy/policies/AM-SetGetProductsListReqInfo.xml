@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AM-SetGetProductsListReqInfo">
+    <DislplayName>AM-SetGetProductsListReqInfo</DislplayName>
+	<Properties/>
+    <AssignVariable>
+		<Name>target-path</Name>
+		<Template><![CDATA[/api/v2]]></Template>
+	</AssignVariable>
+    <AssignVariable>
+		<Name>target.copy.pathsuffix</Name>
+		<Value>true</Value>
+	</AssignVariable>
+    <Copy source="request">
+        <Verb>true</Verb>
+    </Copy>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="true" transport="http" type="request"/>
+</AssignMessage>

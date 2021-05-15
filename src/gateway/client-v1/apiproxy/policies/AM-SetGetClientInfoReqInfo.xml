@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AM-SetGetClientInfoReqInfo">
+    <DislplayName>AM-SetGetClientInfoReqInfo</DislplayName>
+	<Properties/>
+    <AssignVariable>
+		<Name>target-path</Name>
+		<Template><![CDATA[/api/v2/{urirequest.entity}/{urirequest.id}/{urirequest.slug}]]></Template>
+	</AssignVariable>
+    <AssignVariable>
+		<Name>target.copy.pathsuffix</Name>
+		<Value>false</Value>
+	</AssignVariable>
+    <Set>
+        <Headers>
+            <Header name="Authorization">Bearer {jwtToken}</Header>
+			<Header name="Cache-Control">no-cache</Header>
+        </Headers>
+    </Set>
+    <Copy source="request">
+        <Verb>true</Verb>
+    </Copy>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="true" transport="http" type="request"/>
+</AssignMessage>
