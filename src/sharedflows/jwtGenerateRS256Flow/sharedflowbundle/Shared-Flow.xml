@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SharedFlowBundle revision="1" name="SF-JWTGenerateRS256">
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <Description>JWTGenerateRS256</Description>
+    <DisplayName>SF-JWTGenerateRS256</DisplayName>
+    <Policies>
+        <Policy>KVM-GetPrivateKey</Policy>
+        <Policy>JWT-RS256Generate</Policy>
+    </Policies>
+    <Resources/>
+    <Spec></Spec>
+    <subType>SharedFlow</subType>
+    <validate>false</validate>
+    <SharedFlows>
+        <SharedFlow>default</SharedFlow>
+    </SharedFlows>
+</SharedFlowBundle>
