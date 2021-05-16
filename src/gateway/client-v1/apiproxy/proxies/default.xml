@@ -10,12 +10,13 @@
             </Step>
         </FaultRule>
         <FaultRule name="FailedToVerifyAccessToken">
+            <Condition>oauthV2.OAuthV2-VerifyAccessToken.failed = true</Condition>
             <Step>
                 <Name>RF-401AccessTokenInValid</Name>
-                <Condition>oauthV2.OAuthV2-VerifyAccessToken.failed = true</Condition>
             </Step>
         </FaultRule>
         <FaultRule name="FailedToResolveAPIKey">
+            <Condition>verifyapikey.VAK-VerifyKey.failed = true</Condition>
             <Step>
                 <Name>RF-401APIKey</Name>
                 <Condition>(fault.name Matches "FailedToResolveAPIKey") or  (fault.name Matches "InvalidApiKey")</Condition>
