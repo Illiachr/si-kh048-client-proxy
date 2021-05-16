@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <TargetEndpoint name="default">
     <Description/>
-    <FaultRules>
-        <FaultRule name="FailedToVerifyAccessToken">
-            <Step>
-                <Name>RF-401AccessTokenInValid</Name>
-                <Condition>oauthV2.OAuthV2-VerifyAccessToken.failed = true</Condition>
-            </Step>
-        </FaultRule>
-    </FaultRules>
+    <FaultRules/>
     <PreFlow name="PreFlow">
-        <Request>
-            <!-- <Step>
-                <Name>JS-TargetRewrite</Name>
-                <Condition>((proxy.pathsuffix MatchesPath "/clients/{clientId}/balance") and (request.verb = "PATCH")</Condition>
-            </Step> -->
-        </Request>
+        <Request/>
         <Response/>
     </PreFlow>
     <PostFlow name="PostFlow">
