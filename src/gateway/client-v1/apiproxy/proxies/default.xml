@@ -36,11 +36,11 @@
                 <Name>VAK-VerifyKey</Name>
             </Step>
             <Step>
-                <Name>OAuthV2-VerifyAccessToken</Name>
-                <Condition>(proxy.pathsuffix !MatchesPath "/catalog/packages/base" or proxy.pathsuffix !MatchesPath "/catalog/products")</Condition>
+                <Name>Q-EnforceQuota</Name>
             </Step>
             <Step>
-                <Name>Q-EnforceQuota</Name>
+                <Name>OAuthV2-VerifyAccessToken</Name>
+                <Condition>(proxy.pathsuffix MatchesPath "/clients/*/*") or (proxy.pathsuffix MatchesPath "/clients/*")</Condition>
             </Step>
             <Step>
                 <Name>EV-ExtractReqParams</Name>

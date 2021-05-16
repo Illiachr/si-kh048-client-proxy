@@ -4,7 +4,7 @@
 	<Properties/>
     <AssignVariable>
 		<Name>target-path</Name>
-		<Template><![CDATA[/api/v2/catalog/packages/base]]></Template>
+		<Template><![CDATA[{urirequest.entity}/packages/base]]></Template>
 	</AssignVariable>
     <AssignVariable>
 		<Name>target.copy.pathsuffix</Name>

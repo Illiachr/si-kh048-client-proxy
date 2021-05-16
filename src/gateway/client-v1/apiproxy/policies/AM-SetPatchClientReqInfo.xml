@@ -4,11 +4,11 @@
 	<Properties/>
     <AssignVariable>
 		<Name>target-path</Name>
-		<Template><![CDATA[/api/v2]]></Template>
+		<Template><![CDATA[{urirequest.entity}/{urirequest.id}]]></Template>
 	</AssignVariable>
     <AssignVariable>
 		<Name>target.copy.pathsuffix</Name>
-		<Value>true</Value>
+		<Value>false</Value>
 	</AssignVariable>
     <Set>
         <Headers>

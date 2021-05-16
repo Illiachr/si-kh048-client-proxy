@@ -11,11 +11,9 @@
         var responsePayload = JSON.parse(responsePayloadJSON);
 
         var selfLink = joinLink(scheme, host, [basepath, entity, id]);
-        var selfInfoLink = joinLink(scheme, host, [basepath, entity, id, 'info']);
         
         // add link to the response
         responsePayload.self = selfLink;
-        responsePayload.selfInfo = selfInfoLink;
 
         // convert the response object back into JSON
         context.setVariable('response.content', JSON.stringify(responsePayload));

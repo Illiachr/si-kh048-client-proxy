@@ -138,15 +138,9 @@
         <Flow name="addClient">
             <Description>Add new client</Description>
             <Request>
-                <!-- <Step>
-                    <Name>OAuthV2-VerifyAccessToken</Name>
-                </Step> -->
                 <Step>
                     <Name>FC-JWTGenerateRS256Flow</Name>
                 </Step>
-                <!-- <Step>
-                    <Name>AM-AssignProxyURL</Name>
-                </Step> -->
                 <Step>
                     <Name>AM-SetAddClientReqInfo</Name>
                 </Step>
@@ -178,7 +172,7 @@
             <Description>Delete existing Client</Description>
             <Request>
                 <Step>
-                    <Condition>(urirequest.id != accesstoken.CUID) and (accesstoken.ROLE != "admin")</Condition>
+                    <Condition>(accesstoken.ROLE != "admin")</Condition>
                     <Name>RF-403NoPremission</Name>
                 </Step>
                 <Step>
@@ -197,9 +191,6 @@
         <Flow name="patchClient">
             <Description>Partially updates Clients data</Description>
             <Request>
-                <!-- <Step>
-                    <Name>EV-ExtractEntityId</Name>
-                </Step>          -->
                 <Step>
                     <Condition>(urirequest.id != accesstoken.CUID) and (accesstoken.ROLE != "admin")</Condition>
                     <Name>RF-403NoPremission</Name>
@@ -207,9 +198,6 @@
                 <Step>
                     <Name>FC-JWTGenerateRS256Flow</Name>
                 </Step>
-                <!-- <Step>
-                    <Name>AM-AssignProxyURL</Name>
-                </Step> -->
                 <Step>
                     <Name>AM-SetPatchClientReqInfo</Name>
                 </Step>
@@ -220,9 +208,6 @@
         <Flow name="balanceTopUp">
             <Description>Top up balance for a client specified with "id"</Description>
             <Request>
-                <!-- <Step>
-                    <Name>EV-ExtractEntityId</Name>
-                </Step>          -->
                 <Step>
                     <Condition>(urirequest.id != accesstoken.CUID) and (accesstoken.ROLE != "admin")</Condition>
                     <Name>RF-403NoPremission</Name>
@@ -230,16 +215,13 @@
                 <Step>
                     <Name>FC-JWTGenerateRS256Flow</Name>
                 </Step>
+                <Step>
+                    <Name>AM-SetBalanceTopupReqInfo</Name>
+                </Step>
             </Request>
             <Response>
                 <Step>
                     <Name>JS-AddResourceLink</Name>
-                </Step>
-                <!-- <Step>
-                    <Name>AM-AssignProxyURL</Name>
-                </Step> -->
-                <Step>
-                    <Name>AM-SetBalanceTopupReqInfo</Name>
                 </Step>
             </Response>
             <Condition>(proxy.pathsuffix MatchesPath "/clients/{clientId}/balance" or proxy.pathsuffix MatchesPath "/clients/{clientId}/balance/") and (request.verb = "PATCH")</Condition>
@@ -251,6 +233,6 @@
         <LoadBalancer>
             <Server name="sicp-client-service"/>
         </LoadBalancer>
-        <Path>{target-path}</Path>
+        <Path>/api/v2/{target-path}</Path>
     </HTTPTargetConnection>
 </TargetEndpoint>

@@ -2,11 +2,12 @@
 <ExtractVariables async="false" continueOnError="false" enabled="true" name="EV-ExtractReqParams">
     <DislplayName>EV-ExtractReqParams</DislplayName>
     <URIPath>
-        <Pattern ignoreCase="true">/{entity}</Pattern>
-        <Pattern ignoreCase="true">/{entity}/*</Pattern>
-        <Pattern ignoreCase="true">/{entity}/{id}</Pattern>
-        <Pattern ignoreCase="true">/{entity}/{id}/{slug}</Pattern>
         <Pattern ignoreCase="true">/{entity}/{id}/{slug}/*</Pattern>
+        <Pattern ignoreCase="true">/{entity}/{id}/{slug}</Pattern>
+        <Pattern ignoreCase="true">/{entity}/{id}/*</Pattern>
+        <Pattern ignoreCase="true">/{entity}/{id}</Pattern>
+        <Pattern ignoreCase="true">/{entity}/*</Pattern>
+        <Pattern ignoreCase="true">/{entity}</Pattern>
     </URIPath>
     <QueryParam name="filter">
         <Pattern ignoreCase="true">{filter}</Pattern>
