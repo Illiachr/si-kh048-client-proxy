@@ -34,6 +34,10 @@
                 <Step>
                     <Name>AM-SetGetProductsListReqInfo</Name>
                 </Step>
+                <Step>
+                    <Name>AM-SetQueryParamsReqInfo</Name>
+                    <Condition>urirequest.filter != null</Condition>
+                </Step>
             </Request>
             <Response/>
             <Condition>(proxy.pathsuffix MatchesPath "/catalog/products") and (request.verb = "GET")</Condition>
@@ -66,9 +70,6 @@
         <Flow name="getClientById">
             <Description>Get Client by ID</Description>
             <Request>
-                <!-- <Step>
-                    <Name>OAuthV2-VerifyAccessToken</Name>
-                </Step> -->
                 <Step>
                     <Name>EV-ExtractReqParams</Name>
                 </Step>         
@@ -79,9 +80,6 @@
                 <Step>
                     <Name>FC-JWTGenerateRS256Flow</Name>
                 </Step>
-                <!-- <Step>
-                    <Name>AM-AssignProxyURL</Name>
-                </Step> -->
                 <Step>
                     <Name>AM-SetGetClientByIdReqInfo</Name>
                 </Step>
@@ -96,12 +94,6 @@
         <Flow name="buyPackage">
             <Description>Buy package for client</Description>
             <Request>
-                <!-- <Step>
-                    <Name>OAuthV2-VerifyAccessToken</Name>
-                </Step> -->
-                <!-- <Step>
-                    <Name>EV-ExtractEntityId</Name>
-                </Step>          -->
                 <Step>
                     <Condition>urirequest.id != accesstoken.CUID</Condition>
                     <Name>RF-403NoPremission</Name>
@@ -109,9 +101,6 @@
                 <Step>
                     <Name>FC-JWTGenerateRS256Flow</Name>
                 </Step>
-                <!-- <Step>
-                    <Name>AM-AssignProxyURL</Name>
-                </Step> -->
                 <Step>
                     <Name>AM-SetBuyPackageReqInfo</Name>
                 </Step>
@@ -146,9 +135,6 @@
                 <Step>
                     <Name>FC-JWTGenerateRS256Flow</Name>
                 </Step>
-                <!-- <Step>
-                    <Name>AM-AssignProxyURL</Name>
-                </Step> -->
                 <Step>
                     <Name>AM-SetGetClientInfoReqInfo</Name>
                 </Step>
@@ -166,9 +152,6 @@
                 <Step>
                     <Name>FC-JWTGenerateRS256Flow</Name>
                 </Step>
-                <!-- <Step>
-                    <Name>AM-AssignProxyURL</Name>
-                </Step> -->
                 <Step>
                     <Name>AM-SetDeleteClientReqInfo</Name>
                 </Step>
@@ -217,7 +200,6 @@
     </Flows>
     <HTTPTargetConnection>
         <Properties/>
-        <!-- <URL>https://replaced_by_config_json</URL> -->
         <LoadBalancer>
             <Server name="sicp-client-service"/>
         </LoadBalancer>

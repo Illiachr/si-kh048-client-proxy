@@ -47,7 +47,7 @@
             </Step>
             <Step>
                 <Name>OAuthV2-VerifyAccessToken</Name>
-                <Condition>(proxy.pathsuffix MatchesPath "/clients/*/*") or (proxy.pathsuffix MatchesPath "/clients/*")</Condition>
+                <Condition>(proxy.pathsuffix MatchesPath "/clients/*/*") or (proxy.pathsuffix MatchesPath "/clients/*") or (proxy.pathsuffix MatchesPath "/clients")</Condition>
             </Step>
             <Step>
                 <Name>EV-ExtractReqParams</Name>
