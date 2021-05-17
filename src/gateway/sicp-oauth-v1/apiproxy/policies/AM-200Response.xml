@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AM-200AuthResponse">
+    <Set>
+        <Headers>
+            <Header name="Set-Cookie">refresh_token={oauthv2accesstoken.OAuthV2-GenAccessToken.refresh_token}; Path={proxy.basepath}; Secure; HttpOnly</Header>
+        </Headers>
+        <Payload contentType="application/json">
+            {
+                "token_type": "{oauthv2accesstoken.OAuthV2-GenAccessToken.token_type}",
+                "issued_at": "{oauthv2accesstoken.OAuthV2-GenAccessToken.issued_at}",
+                "access_token": "{oauthv2accesstoken.OAuthV2-GenAccessToken.access_token}",
+                "application_name": "{oauthv2accesstoken.OAuthV2-GenAccessToken.application_name}",
+                "scope": "{oauthv2accesstoken.OAuthV2-GenAccessToken.scope}",
+                "refresh_token_issued_at": "{oauthv2accesstoken.OAuthV2-GenAccessToken.refresh_token_issued_at}",
+                "expires_in": "{oauthv2accesstoken.OAuthV2-GenAccessToken.expires_in}",
+                "refresh_token_expires_in": "{oauthv2accesstoken.OAuthV2-GenAccessToken.refresh_token_expires_in}",
+                "refresh_count": "{oauthv2accesstoken.OAuthV2-GenAccessToken.refresh_count}",
+                "status": "{oauthv2accesstoken.OAuthV2-GenAccessToken.status}"
+            }
+        </Payload>
+    </Set>
+    <Copy source="request">
+        <StatusCode>true</StatusCode>
+        <ReasonPhrase>true</ReasonPhrase>
+    </Copy>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="true" transport="http" type="response"/>
+</AssignMessage>

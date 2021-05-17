@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AM-400JSONThreat">
+    <AssignVariable>
+        <Name>jsonThreatErrorRegex</Name>
+        <Value>JSONThreatProtection\[JTP-Protect\]\: Execution failed. reason\: JSONThreatProtection\[JTP-Protect\]\: </Value>
+    </AssignVariable>
+    <Set>
+        <Payload contentType="application/json">{
+    "error":"Invalid JSON payload: {replaceFirst(error.message,jsonThreatErrorRegex,'')}"
+}</Payload>
+        <StatusCode>400</StatusCode>
+        <ReasonPhrase>Bad Request</ReasonPhrase>
+    </Set>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="false" transport="http" type="response"/>
+</AssignMessage>

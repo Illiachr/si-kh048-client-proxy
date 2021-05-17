@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ResponseCache async="false" continueOnError="false" enabled="true" name="RC-ClientsCache">
+    <CacheKey>
+        <KeyFragment ref="proxy.pathsuffix" type="string"/>
+    </CacheKey>
+    <Scope>Exclusive</Scope>
+    <CacheResource>ClientsCache</CacheResource>
+    <ExpirySettings>
+        <ExpiryDate/>
+        <TimeOfDay/>
+        <TimeoutInSec>300</TimeoutInSec>
+    </ExpirySettings>
+    <SkipCacheLookup>request.verb != "GET"</SkipCacheLookup>
+    <SkipCachePopulation>request.verb != "GET"</SkipCachePopulation>
+</ResponseCache>

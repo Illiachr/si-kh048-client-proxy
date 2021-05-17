@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OAuthV2 enabled="true" continueOnError="false" async="false" name="OAuthV2-GenAccessToken">
+    <Operation>GenerateAccessToken</Operation>
+    <!-- 30 min -->
+    <ExpiresIn>1800000</ExpiresIn>
+    <!-- 2 hours -->
+    <RefreshTokenExpiresIn>7200000</RefreshTokenExpiresIn>
+    <SupportedGrantTypes>
+        <GrantType>password</GrantType>
+    </SupportedGrantTypes>
+    <GrantType>request.header.grant_type</GrantType>
+    <UserName>userGrant.login</UserName>
+    <PassWord>userGrant.pwd</PassWord>
+    <Attributes>
+        <Attribute name="CUID" ref="request.header.cuid" display="false"/>
+        <Attribute name="ROLE" ref="request.header.user_role" display="false"/>
+    </Attributes>
+
+    <GenerateResponse enabled='true'/>
+
+</OAuthV2>

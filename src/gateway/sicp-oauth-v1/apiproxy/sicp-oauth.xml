@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="1" name="sicp-oauth">
+    <Basepaths>/sicp/api/v1/oauth</Basepaths>
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1620838440555</CreatedAt>
+    <CreatedBy>illiadev93@gmail.com</CreatedBy>
+    <Description>Soft Insurance Cloud Plalatform Authorization Proxy</Description>
+    <DisplayName>sicp-oauth</DisplayName>
+    <LastModifiedAt>1620838440555</LastModifiedAt>
+    <LastModifiedBy>illiadev93@gmail.com</LastModifiedBy>
+    <ManifestVersion>SHA-512:a167b77a25635dbc5f2049ad0387a2f3e89fe1b2795a574171c0530deaa77bae145f0cacd9d74f54700af9ce918214bcf43f762374063017bd79805925c3ea60:eu-west-1</ManifestVersion>
+    <Policies/>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources/>
+    <Spec></Spec>
+    <TargetServers/>
+    <TargetEndpoints/>
+</APIProxy>
