@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<OAuthV2 enabled="true" continueOnError="false" async="false" name="OAuthV2-GenAuthCode">
-    <Operation>GenerateAuthorizationCode</Operation>
-    <ResponseType>response.header.response_type</ResponseType>
-    <ClientId>response.header.app_id</ClientId>
-    <RedirectUri>response.header.redirect_URI</RedirectUri>
-    <ExpiresIn>600000</ExpiresIn>
-    <GenerateResponse/>
-</OAuthV2>

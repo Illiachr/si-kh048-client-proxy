@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DecodeJWT continueOnError="false" enabled="true" async="false" name="JWT-DecodeToken">
-    <DisplayName>JWT-DecodeToken</DisplayName>
-    <Source>jwt.token</Source>
-</DecodeJWT>

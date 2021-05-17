@@ -9,11 +9,17 @@
                 <Name>AM-400JSONThreat</Name>
             </Step>
         </FaultRule>
-        <FaultRule name="FailedToVerifyAccessToken">
-            <Condition>oauthV2.OAuthV2-VerifyAccessToken.failed = true</Condition>
+        <FaultRule name="InvalidToken">
             <Step>
-                <Name>RF-401AccessTokenInValid</Name>
+                <Name>RF-401TokenInvalid</Name>
             </Step>
+            <Condition>fault.name = "invalid_access_token"</Condition>
+        </FaultRule>
+        <FaultRule name="ExpiredToken">
+            <Step>
+                <Name>AM-401TokenExpired</Name>
+            </Step>
+            <Condition>fault.name = "access_token_expired"</Condition>
         </FaultRule>
         <FaultRule name="FailedToResolveAPIKey">
             <Condition>verifyapikey.VAK-VerifyKey.failed = true</Condition>

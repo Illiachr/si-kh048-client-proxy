@@ -4,7 +4,7 @@
 	<Properties/>
 	<AssignVariable>
 		<Name>target-path</Name>
-		<Template><![CDATA[{urirequest.entity}/{accesstoken.CUID}/buy-package]]></Template>
+		<Template><![CDATA[{urirequest.entity}/{urirequest.id}/buy-package]]></Template>
 	</AssignVariable>
 	<AssignVariable>
 		<Name>target.copy.pathsuffix</Name>
@@ -13,12 +13,12 @@
     <Set>
         <Headers>
             <Header name="Authorization">Bearer {jwtToken}</Header>
-						<Header name="Cache-Control">no-cache</Header>
+			<Header name="Cache-Control">no-cache</Header>
         </Headers>
     </Set>
     <Copy source="request">
         <Verb>true</Verb>
-				<Payload>true</Payload>
+		<Payload>true</Payload>
     </Copy>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
     <AssignTo createNew="true" transport="http" type="request"/>

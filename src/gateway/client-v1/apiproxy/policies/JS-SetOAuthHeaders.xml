@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Javascript async="false" continueOnError="false" enabled="true" timeLimit="200" name="JS-SetOAuthHeaders">
-    <DisplayName>JS-SetOAuthHeaders</DisplayName>
-    <Properties/>
-    <IncludeURL>jsc://utils.js</IncludeURL>
-    <ResourceURL>jsc://JS-SetOAuthHeaders.js</ResourceURL>
-</Javascript>

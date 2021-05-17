@@ -17,15 +17,8 @@
                 <Step>
                     <Name>AM-SetGetBasePackagesListReqInfo</Name>
                 </Step>
-                <Step>
-                    <Name>RC-ClientsCache</Name>
-                </Step>
             </Request>
-            <Response>
-                <Step>
-                    <Name>RC-ClientsCache</Name>
-                </Step>
-            </Response>
+            <Response/>
             <Condition>(proxy.pathsuffix MatchesPath "/catalog/packages/base") and (request.verb = "GET")</Condition>
         </Flow>
         <Flow name="getProductsList">
@@ -50,10 +43,7 @@
                     <Name>RF-403NoPremission</Name>
                 </Step>
                 <Step>
-                    <Name>KVM-GetPrivateKey</Name>
-                </Step>
-                <Step>
-                    <Name>JWT-RS256Generate</Name>
+                    <Name>FC-JWTGenerateRS256Flow</Name>
                 </Step>
                 <Step>
                     <Name>AM-SetGetClientsListReqInfo</Name>
@@ -69,10 +59,7 @@
         </Flow>
         <Flow name="getClientById">
             <Description>Get Client by ID</Description>
-            <Request>
-                <Step>
-                    <Name>EV-ExtractReqParams</Name>
-                </Step>         
+            <Request>        
                 <Step>
                     <Condition>urirequest.id != accesstoken.CUID</Condition>
                     <Name>RF-403NoPremission</Name>
@@ -129,7 +116,7 @@
             <Description>Get all info about Client</Description>
             <Request>
                 <Step>
-                    <Condition>urirequest.id != accesstoken.CUID</Condition>
+                    <Condition>(urirequest.id != accesstoken.CUID) and (accesstoken.ROLE != "admin")</Condition>
                     <Name>RF-403NoPremission</Name>
                 </Step>
                 <Step>

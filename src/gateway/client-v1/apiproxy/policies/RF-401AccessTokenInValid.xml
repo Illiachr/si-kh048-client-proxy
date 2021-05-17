@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<RaiseFault async="false" continueOnError="false" enabled="true" name="RF-401AccessTokenInValid">
-    <DisplayName>RF-401AccessTokenInValid</DisplayName>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RF-401TokenInvalid">
+    <DisplayName>RF-401TokenInvalid</DisplayName>
+    <FaultRules/>
+    <Properties/>
     <FaultResponse>
         <Set>
-            <Headers/>
-              <Payload contentType="application/json">
-                {
-                  "error":"Accsess token not valid or expired"
-                }
-              </Payload>
+            <Headers>
+            </Headers>  
+            <Payload contentType="application/json">{error.content}</Payload>
             <StatusCode>401</StatusCode>
-            <ReasonPhrase>Unauthorized</ReasonPhrase>
+            <ReasonPhrase>Unauthorized - {fault.name}</ReasonPhrase>
         </Set>
     </FaultResponse>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
