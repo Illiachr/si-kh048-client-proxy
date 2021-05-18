@@ -46,14 +46,11 @@
                 <Name>SA-SpikeArrest</Name>
             </Step>
             <Step>
-                <Name>VAK-VerifyKey</Name>
+                <Name>OAuthV2-VerifyAccessToken</Name>
+                <Condition>(proxy.pathsuffix MatchesPath "/clients/*/*") or (proxy.pathsuffix MatchesPath "/clients/*") or (proxy.pathsuffix MatchesPath "/clients")</Condition>
             </Step>
             <Step>
                 <Name>Q-EnforceQuota</Name>
-            </Step>
-            <Step>
-                <Name>OAuthV2-VerifyAccessToken</Name>
-                <Condition>(proxy.pathsuffix MatchesPath "/clients/*/*") or (proxy.pathsuffix MatchesPath "/clients/*") or (proxy.pathsuffix MatchesPath "/clients")</Condition>
             </Step>
             <Step>
                 <Name>EV-ExtractReqParams</Name>
@@ -74,6 +71,16 @@
         </Response>
     </PostFlow>
     <Flows>
+        <Flow name="JsonThreatProtect">
+            <Description>JSON threat protect</Description>
+            <Request>
+                <Step>
+                    <Name>JTP-Protect</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(request.verb = "POST") or (request.verb = "PATCH")</Condition>
+        </Flow>
         <Flow name="404NotFound">
             <Description>404NotFound</Description>
             <Request>
