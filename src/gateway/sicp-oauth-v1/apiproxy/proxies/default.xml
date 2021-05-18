@@ -41,15 +41,6 @@
       <Step>
         <Name>Q-EnforceQuota</Name>
       </Step>
-      <Step>
-        <Name>JTP-Protect</Name>
-      </Step>
-      <Step>
-        <Name>EV-ExtractUserGrant</Name>
-      </Step>
-      <Step>
-        <Name>OAuthV2-GenAccessToken</Name>
-      </Step>
     </Request>
     <Response/>
   </PreFlow>
@@ -57,16 +48,42 @@
     <Request/>
     <Response>
       <Step>
-        <Name>AM-200AuthResponse</Name>
-        <Condition>oauthV2.failed != true</Condition>
-      </Step>
-      <Step>
         <Condition>request.header.Origin != null</Condition>
         <Name>AM-SetCORSHeader</Name>
       </Step>
     </Response>
   </PostFlow>
   <Flows>
+    <Flow name="generateAccessToken">
+      <Description>Generate Access Token</Description>
+      <Request>
+        <Step>
+          <Name>JTP-Protect</Name>
+        </Step>
+        <Step>
+          <Name>EV-ExtractUserGrant</Name>
+        </Step>
+        <Step>
+          <Name>OAuthV2-GenAccessToken</Name>
+        </Step>
+      </Request>
+      <Response/>
+      <Condition>(proxy.pathsuffix MatchesPath "/accesstoken" or proxy.pathsuffix MatchesPath "/accesstoken/") and (request.verb = "POST")</Condition>
+    </Flow>
+    <Flow name="refreshAccessToken">
+      <Description>Refresh Access Token</Description>
+      <Request>
+        <Step>
+          <Name>OAuthV2-RefreshAccessToken</Name>
+        </Step>
+        <Step>
+          <Name>AM-200AuthResponse</Name>
+          <Condition>oauthV2.failed != true</Condition>
+        </Step>
+      </Request>
+      <Response/>
+      <Condition>(proxy.pathsuffix MatchesPath "/refresh" or proxy.pathsuffix MatchesPath "/refresh/") and (request.verb = "GET")</Condition>
+    </Flow>
     <Flow name="404NotFound">
       <Description>404NotFound</Description>
       <Request>
