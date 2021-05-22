@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage  async="false" continueOnError="false" enabled="true" name="AM-SetCORSHeaders">
+    <DisplayName>AM-SetCORSHeaders</DisplayName>
+    <Set>
+        <Headers>
+            <Header name="Access-Control-Allow-Origin">{request.header.Origin}</Header>
+            <Header name="Access-Control-Allow-Headers">apikey, authorization, content-type, origin, x-requested-with, accept</Header>
+            <Header name="Access-Control-Max-Age">600</Header>
+            <Header name="Access-Control-Allow-Methods">GET, PATCH, PUT, POST, DELETE</Header>
+        </Headers>
+        <Payload/>
+    </Set>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="false" transport="http" type="response"/>
+</AssignMessage>

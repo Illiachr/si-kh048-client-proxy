@@ -8,7 +8,12 @@
     </PreFlow>
     <PostFlow name="PostFlow">
         <Request/>
-        <Response/>
+        <Response>
+            <Step>
+                <Condition>request.header.Origin != null</Condition>
+                <Name>AM-SetCORSHeader</Name>
+            </Step>
+        </Response>
     </PostFlow>
     <Flows>
         <Flow name="getBasePackagesList">
@@ -71,11 +76,7 @@
                     <Name>AM-SetGetClientByIdReqInfo</Name>
                 </Step>
             </Request>
-            <Response>
-                <Step>
-                    <Name>JS-AddResourceLink</Name>
-                </Step>
-            </Response>
+            <Response/>
             <Condition>(proxy.pathsuffix MatchesPath "/clients/{clientId}" or proxy.pathsuffix MatchesPath "/clients/{clientId}/") and (request.verb = "GET")</Condition>
         </Flow>
         <Flow name="buyPackage">
@@ -92,11 +93,7 @@
                     <Name>AM-SetBuyPackageReqInfo</Name>
                 </Step>
             </Request>
-            <Response>
-                <Step>
-                    <Name>JS-AddResourceLink</Name>
-                </Step>
-            </Response>
+            <Response/>
             <Condition>(proxy.pathsuffix MatchesPath "/clients/{clientId}/package" or proxy.pathsuffix MatchesPath "/clients/{clientId}/package/") and (request.verb = "PATCH")</Condition>
         </Flow>
         <Flow name="addClient">
@@ -177,12 +174,17 @@
                     <Name>AM-SetBalanceTopupReqInfo</Name>
                 </Step>
             </Request>
-            <Response>
-                <Step>
-                    <Name>JS-AddResourceLink</Name>
-                </Step>
-            </Response>
+            <Response/>
             <Condition>(proxy.pathsuffix MatchesPath "/clients/{clientId}/balance" or proxy.pathsuffix MatchesPath "/clients/{clientId}/balance/") and (request.verb = "PATCH")</Condition>
+        </Flow>
+        <Flow name="404NotFound">
+            <Description>404NotFound</Description>
+            <Request>
+                <Step>
+                    <Name>RF-404NotFound</Name>
+                </Step>
+            </Request>
+            <Response/>
         </Flow>
     </Flows>
     <HTTPTargetConnection>

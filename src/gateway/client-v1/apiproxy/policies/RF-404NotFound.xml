@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<RaiseFault async="false" continueOnError="false" enabled="false" name="RF-404NotFound">
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RF-404NotFound">
     <FaultResponse>
         <Set>
             <Headers/>

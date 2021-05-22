@@ -17,26 +17,15 @@
     </FaultRule>
   </FaultRules>
   <DefaultFaultRule>
-      <Step>
-        <Condition>request.header.Origin != null</Condition>
-        <Name>AM-SetCORSHeader</Name>
-      </Step>
       <AlwaysEnforce>true</AlwaysEnforce>
   </DefaultFaultRule>
   <PreFlow name="PreFlow">
     <Request>
       <Step>
-        <Condition>request.verb == "OPTIONS" AND request.header.Origin != null</Condition>
-        <Name>RF-PreflightCORS</Name>
-      </Step>
-      <Step>
         <Name>SA-SpikeArrest</Name>
       </Step>
       <Step>
         <Name>VAK-VerifyKey</Name>
-      </Step>
-      <Step>
-        <Name>AM-StripAPIKey</Name>
       </Step>
       <Step>
         <Name>Q-EnforceQuota</Name>
@@ -49,11 +38,20 @@
     <Response>
       <Step>
         <Condition>request.header.Origin != null</Condition>
-        <Name>AM-SetCORSHeader</Name>
+        <Name>AM-SetCORSHeaders</Name>
       </Step>
     </Response>
   </PostFlow>
   <Flows>
+    <Flow name="OptionsPreFlight">
+      <Request/>
+      <Response>
+          <Step>
+              <Name>AM-SetCORSHeaders</Name>
+          </Step>
+      </Response>
+      <Condition>request.verb == "OPTIONS" AND request.header.origin != null AND request.header.Access-Control-Request-Method != null</Condition> 
+    </Flow>
     <Flow name="generateAccessToken">
       <Description>Generate Access Token</Description>
       <Request>
@@ -67,7 +65,12 @@
           <Name>OAuthV2-GenAccessToken</Name>
         </Step>
       </Request>
-      <Response/>
+      <Response>
+        <Step>
+          <Name>AM-TokenResponse</Name>
+          <Condition>oauthV2.failed = false</Condition>
+        </Step>
+      </Response>
       <Condition>(proxy.pathsuffix MatchesPath "/accesstoken" or proxy.pathsuffix MatchesPath "/accesstoken/") and (request.verb = "POST")</Condition>
     </Flow>
     <Flow name="refreshAccessToken">
@@ -76,12 +79,13 @@
         <Step>
           <Name>OAuthV2-RefreshAccessToken</Name>
         </Step>
-        <Step>
-          <Name>AM-200AuthResponse</Name>
-          <Condition>oauthV2.failed != true</Condition>
-        </Step>
       </Request>
-      <Response/>
+      <Response>
+        <Step>
+          <Name>AM-TokenResponse</Name>
+          <Condition>oauthV2.failed = false</Condition>
+        </Step>
+      </Response>
       <Condition>(proxy.pathsuffix MatchesPath "/refresh" or proxy.pathsuffix MatchesPath "/refresh/") and (request.verb = "GET")</Condition>
     </Flow>
     <Flow name="404NotFound">

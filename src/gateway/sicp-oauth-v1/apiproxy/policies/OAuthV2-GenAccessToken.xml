@@ -3,17 +3,14 @@
     <Operation>GenerateAccessToken</Operation>
     <!-- 30 min -->
     <ExpiresIn>1800000</ExpiresIn>
-    <!-- 2 hours -->
-    <RefreshTokenExpiresIn>7200000</RefreshTokenExpiresIn>
+    <!-- 2 hours  -->
+    <!-- <RefreshTokenExpiresIn>7200000</RefreshTokenExpiresIn> -->
     <SupportedGrantTypes>
-        <GrantType>password</GrantType>
+        <GrantType>client_credentials</GrantType>
     </SupportedGrantTypes>
-    <GrantType>request.header.grant_type</GrantType>
-    <UserName>userGrant.login</UserName>
-    <PassWord>userGrant.pwd</PassWord>
     <Attributes>
         <Attribute name="CUID" ref="request.header.cuid" display="false"/>
-        <Attribute name="ROLE" ref="request.header.user_role" display="false"/>
+        <Attribute name="ROLE" ref="request.header.role" display="false"/>
     </Attributes>
 
     <GenerateResponse enabled='true'/>
