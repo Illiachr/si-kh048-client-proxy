@@ -45,7 +45,7 @@ describe('transform response: catalog - base packages', () => {
     pathsuffix: '/catalog/packages/base',
     itemId: 'packages'
   }
-  const input = require('./mock/packgesBaseResponse');
+  const input = require('./mock/packagesBaseResponse');
 
     expect(transform(entity, input, envCtx)).toSatisfySchemaInApiSpec('PackagesList');
   });
