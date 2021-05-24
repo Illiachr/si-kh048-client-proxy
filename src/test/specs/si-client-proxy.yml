@@ -7,19 +7,6 @@ servers:
 
 components:
   schemas:
-    User:
-      type: object
-      required:
-        - "login"
-        - "password"
-      properties:
-        login:
-          type: string
-          example: client-login
-        password:
-          type: string
-          format: password
-          example: passwd123
     Client:
       type: object
       properties:
@@ -32,6 +19,7 @@ components:
           format: double
         package: 
           type: string
+          format: uuid
     ClientInfo:
       type: object
       properties:
@@ -59,10 +47,11 @@ components:
         createdTime:
           type: string
           format: date-time
-        products: 
+        productsIds: 
           type: array
           items:
             type: string
+            format: uuid
     PackageInfo:
       type: object
       properties:
@@ -94,7 +83,35 @@ components:
         price: 
           type: number
           format: double
- 
+    PackagesList:
+      type: object
+      properties:
+        data:
+          type: array
+          items: 
+            $ref: '#/components/schemas/Package'
+        links:
+          type: object
+          properties:
+            collection:
+              type: object
+              properties:
+                href:
+                  type: string
+                  example: "https://api-server/catalog/packages/base"
+        total:
+          type: number
+          format: int32
+          example: 2
+        offset:
+          type: number
+          format: int32
+          example: 0
+        pages:
+          type: number
+          format: int32
+          example: 1
+
   responses:
     UnauthorizedError:
       description: Token is missing or invalid, or the user does not have access to perform the action
@@ -184,11 +201,11 @@ paths:
         '200':
           description: List of base Packages
           content:
-            application/json:
+            application/json:              
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Package'
+                  $ref: '#/components/schemas/PackagesList'
         '500':
           description: Internal error
           content:
