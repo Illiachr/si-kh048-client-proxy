@@ -1,4 +1,4 @@
-module.exports = [
+module.exports.BASE_PACKAGES = [
     {
       "id": "a0f41706-19d4-41f2-8607-ee2a6d18fd0f",
       "name": "Base Extortion Package",
@@ -20,4 +20,19 @@ module.exports = [
         "d6f2bc4d-951f-4cdd-8ea0-86544a982cf8"
       ]
     }
+  ];
+
+module.exports.PRODUCTS = [
+  {
+    "id": "d6f2bc4d-951f-4cdd-8ea0-86544a982cf8",
+    "name": "Health Insurance",
+    "description": "Happiness is nothing more than good health and a bad memory.",
+    "price": 10000
+  },
+  {
+    "id": "785e4ad6-ab12-4e11-b6df-3dd26ff46335",
+    "name": "Car Insurance",
+    "description": "If you`re a bad driver, buy it immediatly",
+    "price": 358.99
+  }
   ];

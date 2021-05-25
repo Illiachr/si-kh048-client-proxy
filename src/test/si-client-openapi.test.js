@@ -7,46 +7,29 @@ const { transform } = require('../gateway/client-v1/apiproxy/resources/jsc/utils
 
 const openApiFilePath = path.normalize(path.join(__dirname, './specs/si-client-proxy.yml'));
 
-// try {
-//   const doc = yaml.load(fs.readFileSync(openApiFilePath, 'utf8'));
-//   console.log(doc);
-// } catch (e) {
-//   console.log(e);
-// }
-
 jestOpenAPI(openApiFilePath);
 
-describe('GET /catalog/packages/base', () => {
-  it('should satisfy OpenAPI spec', async () => {
-    // Get an HTTP response from your server (e.g. using axios)
-    const res = await axios.get('https://illiadev93-eval-test.apigee.net/sicp/api/v1/catalog/packages/base',
-    {
-      headers: { apikey: "Rhb0BLsayLw7hcJpKPUbiuxGNBry7ZfY" }
-    });
-
-    // console.log(res);
-
-    expect(res.status).toEqual(200);
-
-    // Assert that the HTTP response satisfies the OpenAPI spec
-    expect(res).toSatisfyApiSpec();
-  });
-});
-
-describe('transform response: catalog - base packages', () => {
-  it('should satisfy schema in spec', () => {
-    
-  const entity = 'catalog';
-
-  const envCtx = {
-    reqScheme: 'https',
-    proxyHost: 'illiadev93-eval-test.apigee.net',
-    basepath: '/sicp/api/v1',
-    pathsuffix: '/catalog/packages/base',
-    itemId: 'packages'
-  }
-  const input = require('./mock/packagesBaseResponse');
-
-    expect(transform(entity, input, envCtx)).toSatisfySchemaInApiSpec('PackagesList');
-  });
-});
+describe('Catalog', () => {
+	describe('GET requests', () => {
+		describe('Base packages: valid response', () => {
+			let response = null;
+			const apikey = 'Rhb0BLsayLw7hcJpKPUbiuxGNBry7ZfY';
+			const requestUrl = 'https://illiadev93-eval-test.apigee.net/sicp/api/v1/catalog/packages/base';
+		const options = { 
+				headers: { apikey }
+			};
+			
+			beforeAll(async() => {
+				response = await axios.get(requestUrl, options);
+			});
+			
+			it('should return a 200 response', () => {
+				expect(response.status).toEqual(200);
+			});
+			
+			it('should satisfy the OpenAPI spec', () => {
+				expect(response).toSatisfyApiSpec()
+			})
+		}); // describe Base packages: valid response
+	}); // describe GET requests
+}); // describe Catalog
