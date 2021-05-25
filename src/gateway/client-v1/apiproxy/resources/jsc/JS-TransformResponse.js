@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // (function() {
 //     try {
 //         var scheme = context.getVariable('req_scheme');
@@ -46,10 +47,10 @@
         basepath: context.getVariable('proxy.basepath'),
         pathsuffix: context.getVariable('proxy.pathsuffix'),
         itemId: context.getVariable('urirequest.id')
-    }
+    };
     
     if (parsedResponse) {
-        response = transform(entity, parsedResponse, envCtx)
+        response = transform(entity, parsedResponse, envCtx);
         
         context.getVariable('response.content', JSON.stringify(response, null, 2));
     }

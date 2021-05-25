@@ -1,9 +1,12 @@
+// eslint-disable-next-line no-undef
 process.env.NODE_ENV = 'UNITTEST';
 module.exports = {
     clearMocks: true,
     collectCoverage: true,
     collectCoverageFrom: [
-        '../gateway/client-v1/apiproxy/resources/jsc/*.js'
+        '**/utils.js',
+        '!**/node_modules/**',
+        '!**/target/**'
     ],
     testEnvironment: 'node',
     testMatch: ['**/*.test.js']
