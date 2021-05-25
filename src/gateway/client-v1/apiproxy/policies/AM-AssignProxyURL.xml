@@ -10,7 +10,7 @@
         <Ref>request.header.host</Ref>
     </AssignVariable>
     <AssignVariable>
-        <Name>proxy_base_path</Name>
-        <Ref>proxy.basepath</Ref>
+        <Name>req_verb</Name>
+        <Ref>request.verb</Ref>
     </AssignVariable>
 </AssignMessage>

@@ -38,6 +38,7 @@
             </Step>
             <Step>
                 <Name>VAK-VerifyKey</Name>
+                <Condition>(request.verb != "OPTIONS")</Condition>
             </Step>
             <Step>
                 <Name>OAuthV2-VerifyAccessToken</Name>
@@ -60,6 +61,7 @@
         <Response>
             <Step>
                 <Name>JS-TransformResponse</Name>
+                <Condition>(request.verb != "OPTIONS")</Condition>
             </Step>
         </Response>
     </PostFlow>

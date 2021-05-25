@@ -1,7 +1,7 @@
-openapi: '3.0.2'
+openapi: "3.0.2"
 info:
-  title: 'SI Client Proxy API'
-  version: '2.0'
+  title: "SI Client Proxy API"
+  version: "2.0"
 servers:
   - url: https://illiadev93-eval-test.apigee.net/sicp/api/v1
 
@@ -10,28 +10,16 @@ components:
     Client:
       type: object
       properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-            name:
-              type: string
-            balance: 
-              type: number
-              format: double
-            package: 
-              type: string
-              format: uuid
-        links:
-          type: object
-          properties:
-            self:
-              type: object
-              properties:
-                href:
-                  type: string
-                  example: "https://api-server/clients/3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        id:
+          type: string
+        name:
+          type: string
+        balance:
+          type: number
+          format: double
+        package:
+          type: string
+          format: uuid
     ClientInfo:
       type: object
       properties:
@@ -42,10 +30,10 @@ components:
               type: string
             name:
               type: string
-            balance: 
+            balance:
               type: number
               format: double
-            package: 
+            package:
               $ref: "#/components/schemas/PackageInfo"
         links:
           type: object
@@ -63,15 +51,15 @@ components:
           type: string
         name:
           type: string
-        description: 
+        description:
           type: string
-        price: 
+        price:
           type: number
           format: double
         createdTime:
           type: string
           format: date-time
-        productsIds: 
+        productsIds:
           type: array
           items:
             type: string
@@ -83,18 +71,18 @@ components:
           type: string
         name:
           type: string
-        description: 
+        description:
           type: string
-        price: 
+        price:
           type: number
           format: double
         createdTime:
           type: string
           format: date-time
-        products: 
+        products:
           type: array
           items:
-            $ref: '#/components/schemas/Product'
+            $ref: "#/components/schemas/Product"
     Product:
       type: object
       properties:
@@ -102,9 +90,9 @@ components:
           type: string
         name:
           type: string
-        description: 
+        description:
           type: string
-        price: 
+        price:
           type: number
           format: double
 
@@ -175,36 +163,36 @@ components:
       type: apiKey
       in: header
       name: apikey
-      
+
     bearerAuth:
       type: http
       scheme: bearer
 
 security:
   - ApiKeyAuth: []
-  
+
 paths:
   /catalog/packages/base:
     get:
       tags:
-      - catalog
+        - catalog
       security:
-      - ApiKeyAuth: []
+        - ApiKeyAuth: []
       summary: List of base Packages
       operationId: getBasePackagesList
       description: Get list of base Packages
       responses:
-        '200':
+        "200":
           description: List of base Packages
           content:
-            application/json:              
+            application/json:
               schema:
                 type: object
                 properties:
                   data:
                     type: array
-                    items: 
-                      $ref: '#/components/schemas/Package'
+                    items:
+                      $ref: "#/components/schemas/Package"
                   links:
                     type: object
                     properties:
@@ -218,7 +206,7 @@ paths:
                     type: number
                     format: int32
                     example: 2
-        '500':
+        "500":
           description: Internal error
           content:
             application/json:
@@ -230,7 +218,7 @@ paths:
   /catalog/products:
     get:
       tags:
-      - catalog
+        - catalog
       summary: List of Products
       operationId: getProductsList
       description: Get list of Products
@@ -241,7 +229,7 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: List of Products
           content:
             application/json:
@@ -250,8 +238,8 @@ paths:
                 properties:
                   data:
                     type: array
-                    items: 
-                      $ref: '#/components/schemas/Product'
+                    items:
+                      $ref: "#/components/schemas/Product"
                   links:
                     type: object
                     properties:
@@ -265,7 +253,7 @@ paths:
                     type: number
                     format: int32
                     example: 2
-        '500':
+        "500":
           description: Internal error
           content:
             application/json:
@@ -278,7 +266,7 @@ paths:
   /clients/{id}/balance:
     patch:
       tags:
-      - clients
+        - clients
       security:
         - ApiKeyAuth: []
         - oAuth2ClientCredentials: []
@@ -302,7 +290,7 @@ paths:
                   format: double
                   example: 2000.9999
       responses:
-        '200':
+        "200":
           description: current balance of the client
           content:
             application/json:
@@ -326,10 +314,10 @@ paths:
   /clients/{id}/package:
     patch:
       tags:
-      - clients
+        - clients
       security:
-      - ApiKeyAuth: []
-      - bearerAuth: []
+        - ApiKeyAuth: []
+        - bearerAuth: []
       summary: Operation - Buy Package
       operationId: buyPackage
       description: Package data for Client
@@ -348,14 +336,14 @@ paths:
               properties:
                 name:
                   type: string
-                description: 
+                description:
                   type: string
                 productIds:
                   type: array
-                  items: 
+                  items:
                     type: string
       responses:
-        '200':
+        "200":
           description: Package ID
           content:
             application/json:
@@ -364,7 +352,7 @@ paths:
                 properties:
                   packageId:
                     type: string
-        '400':
+        "400":
           description: Missing parametrs
           content:
             application/json:
@@ -373,7 +361,7 @@ paths:
                 properties:
                   error:
                     type: string
-        '402':
+        "402":
           description: Payment require
           content:
             application/json:
@@ -382,7 +370,7 @@ paths:
                 properties:
                   error:
                     type: string
-        '404':
+        "404":
           description: Client not found
           content:
             application/json:
@@ -391,7 +379,7 @@ paths:
                 properties:
                   error:
                     type: string
-        '500':
+        "500":
           description: Internal error
           content:
             application/json:
@@ -403,7 +391,7 @@ paths:
   /clients/{id}/info:
     get:
       tags:
-      - clients
+        - clients
       security:
         - ApiKeyAuth: []
         - bearerAuth: []
@@ -417,13 +405,13 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: All info about Client 
+        "200":
+          description: All info about Client
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ClientInfo"
-        '500':
+        "500":
           description: Internal error
           content:
             application/json:
@@ -436,7 +424,7 @@ paths:
   /clients:
     get:
       tags:
-      - clients
+        - clients
       security:
         - ApiKeyAuth: []
         - bearerAuth: []
@@ -444,13 +432,13 @@ paths:
       operationId: getClientsList
       description: Get list of Clients
       parameters:
-          - in: query
-            name: filter
-            description: "Filter by name"
-            schema:
-              type: string
+        - in: query
+          name: filter
+          description: "Filter by name"
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: A list of clients
           content:
             application/json:
@@ -459,8 +447,8 @@ paths:
                 properties:
                   data:
                     type: array
-                    items: 
-                      $ref: '#/components/schemas/Client'
+                    items:
+                      $ref: "#/components/schemas/Client"
                   links:
                     type: object
                     properties:
@@ -474,8 +462,8 @@ paths:
                     type: number
                     format: int32
                     example: 2
-            
-        '500':
+
+        "500":
           description: Internal error
           content:
             application/json:
@@ -486,7 +474,7 @@ paths:
                     type: string
     post:
       tags:
-      - clients
+        - clients
       security:
         - ApiKeyAuth: []
         - bearerAuth: []
@@ -504,7 +492,7 @@ paths:
                   format: string
                   example: Client Name
       responses:
-        '204':
+        "204":
           description: Client successfully added
         "400":
           $ref: "#/components/responses/400BadRequest"
@@ -518,7 +506,7 @@ paths:
   /clients/{id}:
     get:
       tags:
-      - clients
+        - clients
       security:
         - ApiKeyAuth: []
         - bearerAuth: []
@@ -532,13 +520,25 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Client
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Client'
-        '500':
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Client"
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            example: "https://api-server/clients/3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        "500":
           description: Internal error
           content:
             application/json:
@@ -549,7 +549,7 @@ paths:
                     type: string
     patch:
       tags:
-      - clients
+        - clients
       security:
         - ApiKeyAuth: []
         - bearerAuth: []
@@ -571,9 +571,9 @@ paths:
                 name:
                   type: string
       responses:
-        '204':
+        "204":
           description: Ok
-        '500':
+        "500":
           description: Internal error
           content:
             application/json:
@@ -584,7 +584,7 @@ paths:
                     type: string
     delete:
       tags:
-      - clients
+        - clients
       security:
         - ApiKeyAuth: []
         - bearerAuth: []
@@ -598,9 +598,9 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        "204":
           description: OK
-        '500':
+        "500":
           description: Internal error
           content:
             application/json:

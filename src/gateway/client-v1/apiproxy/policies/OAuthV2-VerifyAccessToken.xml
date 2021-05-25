@@ -1,5 +1,5 @@
 <OAuthV2 async="false" continueOnError="false" enabled="true" name="OAuthV2-VerifyAccessToken">
     <DisplayName>OAuthV2-VerifyAccessToken</DisplayName>
     <Operation>VerifyAccessToken</Operation>
-    <AccessTokenPrefix>xBearer</AccessTokenPrefix> <!-- Optional, default is Bearer -->
+    <AccessTokenPrefix>Bearer</AccessTokenPrefix> <!-- Optional, default is Bearer -->
 </OAuthV2>

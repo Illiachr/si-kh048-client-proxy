@@ -8,7 +8,6 @@
             <Header name="Access-Control-Max-Age">600</Header>
             <Header name="Access-Control-Allow-Methods">GET, PATCH, PUT, POST, DELETE</Header>
         </Headers>
-        <Payload/>
     </Set>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
     <AssignTo createNew="false" transport="http" type="response"/>
