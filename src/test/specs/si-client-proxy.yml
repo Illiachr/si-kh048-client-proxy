@@ -10,48 +10,75 @@ components:
     Client:
       type: object
       properties:
-        id:
-          type: string
-        name:
-          type: string
-        balance: 
-          type: number
-          format: double
-        package: 
-          type: string
-          format: uuid
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            balance: 
+              type: number
+              format: double
+            package: 
+              type: string
+              format: uuid
+        links:
+          type: object
+          properties:
+            self:
+              type: object
+              properties:
+                href:
+                  type: string
+                  example: "https://api-server/clients/3fa85f64-5717-4562-b3fc-2c963f66afa6"
     ClientInfo:
       type: object
       properties:
-        id:
-          type: string
-        name:
-          type: string
-        balance: 
-          type: number
-          format: double
-        package: 
-          $ref: "#/components/schemas/PackageInfo"
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            balance: 
+              type: number
+              format: double
+            package: 
+              $ref: "#/components/schemas/PackageInfo"
+        links:
+          type: object
+          properties:
+            self:
+              type: object
+              properties:
+                href:
+                  type: string
+                  example: "https://api-server/clients/3fa85f64-5717-4562-b3fc-2c963f66afa6"
     Package:
       type: object
       properties:
-        id:
-          type: string
-        name:
-          type: string
-        description: 
-          type: string
-        price: 
-          type: number
-          format: double
-        createdTime:
-          type: string
-          format: date-time
-        productsIds: 
-          type: array
-          items:
-            type: string
-            format: uuid
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            description: 
+              type: string
+            price: 
+              type: number
+              format: double
+            createdTime:
+              type: string
+              format: date-time
+            productsIds: 
+              type: array
+              items:
+                type: string
+                format: uuid
     PackageInfo:
       type: object
       properties:
@@ -111,9 +138,65 @@ components:
           type: number
           format: int32
           example: 1
+    ProductList:
+      type: object
+      properties:
+        data:
+          type: array
+          items: 
+            $ref: '#/components/schemas/Product'
+        links:
+          type: object
+          properties:
+            collection:
+              type: object
+              properties:
+                href:
+                  type: string
+                  example: "https://api-server/catalog/products"
+        total:
+          type: number
+          format: int32
+          example: 2
+        offset:
+          type: number
+          format: int32
+          example: 0
+        pages:
+          type: number
+          format: int32
+          example: 1
+    ClientsList:
+      type: object
+      properties:
+        data:
+          type: array
+          items: 
+            $ref: '#/components/schemas/Client'
+        links:
+          type: object
+          properties:
+            collection:
+              type: object
+              properties:
+                href:
+                  type: string
+                  example: "https://api-server/clients"
+        total:
+          type: number
+          format: int32
+          example: 2
+        offset:
+          type: number
+          format: int32
+          example: 0
+        pages:
+          type: number
+          format: int32
+          example: 1
 
   responses:
-    UnauthorizedError:
+    401UnauthorizedError:
       description: Token is missing or invalid, or the user does not have access to perform the action
       content:
         application/json:
@@ -123,8 +206,8 @@ components:
               error:
                 type: string
                 example: "Unauthorized"
-    NotFoundError:
-      description: User not found
+    404NotFoundError:
+      description: Client not found
       content:
         application/json:
           schema:
@@ -132,8 +215,8 @@ components:
             properties:
               error:
                 type: string
-                example: "User not found"
-    AlreadyExists:
+                example: "Client not found"
+    409AlreadyExists:
       description: Client already exists
       content:
         application/json:
@@ -143,7 +226,7 @@ components:
               error:
                 type: string
                 example: "Client already exists"
-    BadRequest:
+    400BadRequest:
       description: Wrong body params
       content:
         application/json:
@@ -152,17 +235,7 @@ components:
             properties:
               error:
                 type: string
-    LoginPwdError:
-      description: Username or password is incorrect
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-                example: Username or password is incorrect
-    InternalError:
+    500InternalError:
       description: Internal error
       content:
         application/json:
@@ -178,6 +251,13 @@ components:
       type: apiKey
       in: header
       name: apikey
+
+    oAuth2ClientCredentials:
+      type: oauth2
+      flows: 
+        clientCredentials: 
+          tokenUrl: https://illiadev93-eval-test.apigee.net/sicp/api/v1/oauth
+          scopes: {}
       
     bearerAuth:
       type: http
@@ -253,7 +333,7 @@ paths:
       - clients
       security:
         - ApiKeyAuth: []
-        - bearerAuth: []
+        - oAuth2ClientCredentials: []
       summary: Client balance topup
       operationId: balanceTopUp
       description: Top up balance for a client specified with "id"
@@ -286,13 +366,13 @@ paths:
                     format: double
                     example: 2000.9999
         "400":
-          $ref: "#/components/responses/BadRequest"
+          $ref: "#/components/responses/400BadRequest"
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          $ref: "#/components/responses/401UnauthorizedError"
         "404":
-          $ref: "#/components/responses/NotFoundError"
+          $ref: "#/components/responses/404NotFoundError"
         "500":
-          $ref: "#/components/responses/InternalError"
+          $ref: "#/components/responses/500InternalError"
   /clients/{id}/package:
     patch:
       tags:
@@ -461,13 +541,13 @@ paths:
         '204':
           description: Client successfully added
         "400":
-          $ref: "#/components/responses/BadRequest"
+          $ref: "#/components/responses/400BadRequest"
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          $ref: "#/components/responses/401UnauthorizedError"
         "409":
-          $ref: "#/components/responses/AlreadyExists"
+          $ref: "#/components/responses/409AlreadyExists"
         "500":
-          $ref: "#/components/responses/InternalError"
+          $ref: "#/components/responses/500InternalError"
 
   /clients/{id}:
     get:
