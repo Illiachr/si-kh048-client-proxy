@@ -97,7 +97,128 @@ describe("Clients", () => {
       });
     }); // describe Clients List
   }); // describe GET requests
-  describe("POST request", () => {}); // POST request: /{clientId}
-  describe("PATCH request", () => {}); // PATCH request: /balance, /{clientId}, /package
-  describe("DELETE request", () => {}); // DELETE request: /{clientId}
+  describe("POST requests", () => {
+    // eslint-disable-next-line no-undef
+    if (process.env.TEST_CLIENT_ADD) {
+      return;
+    }
+    describe("add client", () => {
+      let response = null;  
+      const requestUrl = basepath + "/" +"clients";
+      const body = { name: "Jest Test"};
+      const options = { 
+        // eslint-disable-next-line no-undef
+        headers: { authorization: process.env.TOKEN_TEST_CLIENT, apikey }
+      };
+
+      beforeAll(async() => {
+        response = await axios.post(requestUrl, body, options);
+      });
+			
+      it("should return a 200 response", () => {
+        expect(response.status).toEqual(200);
+      });
+			
+      it("should satisfy the OpenAPI spec", () => {
+        expect(response).toSatisfyApiSpec();
+      });
+    });
+  }); // POST request: /{clientId}
+  describe("PATCH requests", () => {
+    describe("update client name", () => {
+      let response = null;  
+      const requestUrl = basepath + "/" +"clients" + "/" + process.env.CLIENT_ID;
+      const body = { name: "Jane Patched By Jest Test"};
+      const options = { 
+        // eslint-disable-next-line no-undef
+        headers: { authorization: process.env.TOKEN_CLIENT, apikey }
+      };
+
+      beforeAll(async() => {
+        response = await axios.patch(requestUrl, body, options);
+      });
+			
+      it("should return a 200 response", () => {
+        expect(response.status).toEqual(200);
+      });
+			
+      it("should satisfy the OpenAPI spec", () => {
+        expect(response).toSatisfyApiSpec();
+      });
+    }); // /{clientId}
+    describe("topup client balance", () => {
+      let response = null;  
+      const requestUrl = basepath + "/" +"clients" + "/" + process.env.CLIENT_ID + "/" + "balance";
+      const body = { amount: 5000.789};
+      const options = { 
+        // eslint-disable-next-line no-undef
+        headers: { authorization: process.env.TOKEN_CLIENT, apikey }
+      };
+
+      beforeAll(async() => {
+        response = await axios.patch(requestUrl, body, options);
+      });
+			
+      it("should return a 200 response", () => {
+        expect(response.status).toEqual(200);
+      });
+			
+      it("should satisfy the OpenAPI spec", () => {
+        expect(response).toSatisfyApiSpec();
+      });
+    }); // /balance
+    describe("client buy package", () => {
+      let response = null;  
+      const requestUrl = basepath + "/" +"clients" + "/" + process.env.CLIENT_ID + "/" + "package";
+      const body = {
+        "name": "JEST TEST PACKAGE" + Date.now(),
+        "description": "JEST TEST PACKAGE",
+        "productIds": [
+          "d6f2bc4d-951f-4cdd-8ea0-86544a982cf8"
+        ]
+      };
+      const options = { 
+        // eslint-disable-next-line no-undef
+        headers: { authorization: process.env.TOKEN_CLIENT, apikey }
+      };
+
+      beforeAll(async() => {
+        response = await axios.patch(requestUrl, body, options);
+      });
+			
+      it("should return a 200 response", () => {
+        expect(response.status).toEqual(200);
+      });
+			
+      it("should satisfy the OpenAPI spec", () => {
+        expect(response).toSatisfyApiSpec();
+      });
+    }); // /package
+  }); // PATCH requests
+  describe("DELETE requests", () => {
+    // eslint-disable-next-line no-undef
+    if (process.env.TEST_CLIENT_ADD) {
+      return;
+    }
+    describe("delete client", () => {
+      let response = null;  
+      const requestUrl = basepath + "/" +"clients" + "/" + process.env.TEST_CLIENT_ID;
+      const options = { 
+        // eslint-disable-next-line no-undef
+        headers: { authorization: process.env.TOKEN_TEST_CLIENT, apikey }
+      };
+
+      beforeAll(async() => {
+        response = await axios.delete(requestUrl, options);
+      });
+			
+      it("should return a 200 response", () => {
+        expect(response.status).toEqual(200);
+      });
+			
+      it("should satisfy the OpenAPI spec", () => {
+        expect(response).toSatisfyApiSpec();
+      });
+    });
+  }); // DELETE requests: /{clientId}
 }); // describe Clients

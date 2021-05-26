@@ -68,7 +68,7 @@ function transform(entity, input, ctx) {
       // }
       proxyResponse.links = {
         collection: {
-          href: joinLink(ctx.reqScheme, ctx.proxyHost, [basepath, pathsuffix])
+          href: joinLink(ctx.reqScheme, ctx.proxyHost, [basepath, entity])
         }
       };
       proxyResponse.total = input.length;
@@ -84,7 +84,7 @@ function transform(entity, input, ctx) {
       // });
       proxyResponse.links = {
         self: {
-          href: joinLink(ctx.reqScheme, ctx.proxyHost, [basepath, pathsuffix])
+          href: joinLink(ctx.reqScheme, ctx.proxyHost, [basepath, entity, ctx.itemId])
         }
       };
     } // if GET /clients/{clientId}
@@ -93,7 +93,7 @@ function transform(entity, input, ctx) {
   if (entity === "clients" && ctx.reqVerb === "POST") {
     proxyResponse.links = {
       self: {
-        href: joinLink(ctx.reqScheme, ctx.proxyHost, [basepath, pathsuffix, ctx.itemId])
+        href: joinLink(ctx.reqScheme, ctx.proxyHost, [basepath, entity, ctx.itemId])
       }
     };
   } // if POST /clients
@@ -103,7 +103,7 @@ function transform(entity, input, ctx) {
     Object.keys(input).forEach(key => proxyResponse.data[key] = input[key]);
     proxyResponse.links = {
       self: {
-        href: joinLink(ctx.reqScheme, ctx.proxyHost, [basepath, pathsuffix, ctx.itemId])
+        href: joinLink(ctx.reqScheme, ctx.proxyHost, [basepath, entity, ctx.itemId])
       }
     };
   } // if PATCH /clients -> balance, name, package
@@ -119,13 +119,12 @@ function assignResponseData(input) {
       data[key] = Number(data[key]);
     }
     if (key === "package" && typeof input[key] === "object") {
-      data.key = {};
+      data[key] = {};
       Object.keys(input[key]).forEach(field => {
         data[key][field] = input[key][field];
         if (field === "createdTime") {
           data[key][field] = timeToISO(input[key][field]);
         }
-        data[key][field] = input[key][field];
       });
     }
   });

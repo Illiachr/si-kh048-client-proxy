@@ -5,7 +5,7 @@
   const originalResponse = context.getVariable("response.content");
 
   try {
-    if (originalResponse.lenght) {
+    if (originalResponse.length) {
       parsedResponse = JSON.parse(originalResponse);
     } else { parsedResponse = {}; }
     

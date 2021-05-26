@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --config=jest.config.js",
     "test:spec": "jest --config=jest.unit.config.js si-client-openapi.test.js",
-    "test:transform": "jest --config=jest.unit.config.js transform.schema.test.js"
+    "test:transform": "jest --config=jest.unit.config.js transform.schema.test.js",
+    "test-watch:transform":"jest --watch --config=jest.unit.config.js transform.schema.test.js"
   },
   "keywords": [
     "jest",
