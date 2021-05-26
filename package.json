@@ -7,7 +7,7 @@
     "test": "jest --config=jest.config.js",
     "test:spec": "jest --config=jest.unit.config.js si-client-openapi.test.js",
     "test:transform": "jest --config=jest.unit.config.js transform.schema.test.js",
-    "test-watch:transform":"jest --watch --config=jest.unit.config.js transform.schema.test.js"
+    "test-watch:transform": "jest --watch --config=jest.unit.config.js transform.schema.test.js"
   },
   "keywords": [
     "jest",
@@ -23,6 +23,7 @@
     "axios": "^0.21.1",
     "eslint": "^7.27.0",
     "eslint-plugin-jest": "^24.3.6",
+    "eslint-plugin-node": "^11.1.0",
     "jest": "^26.6.3",
     "jest-openapi": "^0.13.0",
     "js-yaml": "^4.1.0"

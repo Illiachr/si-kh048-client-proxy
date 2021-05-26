@@ -6,7 +6,10 @@
     "jest/globals": true
   },
   "plugins": ["jest"],
-  "extends": "eslint:recommended",
+  "extends": [
+        "eslint:recommended",
+        "plugin:node/recommended"
+    ],
   "parserOptions": {
     "ecmaVersion": 12
   },
@@ -16,6 +19,7 @@
     "quotes": ["error", "double"],
     "semi": ["error", "always"],
     "no-console": "error",
+    "node/no-unpublished-require": "off",
     "jest/no-disabled-tests": "warn",
     "jest/no-focused-tests": "error",
     "jest/no-identical-title": "error",
