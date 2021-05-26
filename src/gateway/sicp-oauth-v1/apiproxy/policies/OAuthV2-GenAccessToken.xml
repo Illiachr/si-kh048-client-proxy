@@ -10,7 +10,7 @@
     </SupportedGrantTypes>
     <Attributes>
         <Attribute name="CUID" ref="request.header.cuid" display="false"/>
-        <Attribute name="ROLE" ref="request.formparam.role" display="false"/>
+        <Attribute name="ROLE" ref="request.formparam.user_role" display="false"/>
     </Attributes>
     <GenerateResponse enabled='true'/>
 </OAuthV2>

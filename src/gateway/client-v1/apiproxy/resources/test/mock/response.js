@@ -43,3 +43,51 @@ module.exports.CLIENT = {
   "balance":"9310.296875",
   "package":"b0fc4281-0e21-46ac-bd85-975edd26b689",
 };
+
+module.exports.CLIENT_INFO = {
+  "id":"ccaab0f7-3bd3-4417-8a9f-a2843f422917",
+  "name":"Jane",
+  "balance":"9310.296875",
+  "package": {
+    "id": "a0f41706-19d4-41f2-8607-ee2a6d18fd0f",
+    "name": "Base Extortion Package",
+    "description": "Protects against burglary penetration.",
+    "price": 10358.99,
+    "createdTime": "24-03-2021 02:10:48",
+    "productIds": [
+      {
+        "id": "d6f2bc4d-951f-4cdd-8ea0-86544a982cf8",
+        "name": "Health Insurance",
+        "description": "Happiness is nothing more than good health and a bad memory.",
+        "price": 10000
+      },
+      {
+        "id": "785e4ad6-ab12-4e11-b6df-3dd26ff46335",
+        "name": "Car Insurance",
+        "description": "If you`re a bad driver, buy it immediatly",
+        "price": 358.99
+      }
+    ]
+  }
+};
+
+module.exports.CLIENTS_LIST = [
+  {
+    "id":"ccaab0f7-3bd3-4417-8a9f-a2843f422917",
+    "name":"Jane",
+    "balance":"9310.296875",
+    "package":"b0fc4281-0e21-46ac-bd85-975edd26b689",
+  },
+  {
+    "id":"ccaab0f7-3bd3-4417-8a9f-a2843f422917",
+    "name":"Jane",
+    "balance":"9310.296875",
+    "package":"b0fc4281-0e21-46ac-bd85-975edd26b689",
+  },
+  {
+    "id":"ccaab0f7-3bd3-4417-8a9f-a2843f422917",
+    "name":"Jane",
+    "balance":"9310.296875",
+    "package":"b0fc4281-0e21-46ac-bd85-975edd26b689",
+  }
+];

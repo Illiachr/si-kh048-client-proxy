@@ -28,7 +28,7 @@ function timeToISO(dateTime) {
 }
 
 function transform(entity, input, ctx) {
-  console.log(input);
+  // console.log(input);
   const pathsuffix = ctx.pathsuffix,
     basepath = ctx.basepath,
     proxyResponse = {};
@@ -56,48 +56,80 @@ function transform(entity, input, ctx) {
       break;
     } // end switch
   } // end if
-  if (entity === "clients") {
-    console.log("ctx.itemId >>> ", ctx.itemId);
-    if (pathsuffix === "/clients" && ctx.reqVerb === "GET") {
+  if (entity === "clients" && ctx.reqVerb === "GET") {
+    // console.log("ctx.itemId >>> ", ctx.itemId);
+    if (pathsuffix === "/clients") {
       proxyResponse.data = [];
-      for (var k = 0; k < input.length; k++) {
-        proxyResponse.data[k] = input[k];
-        proxyResponse.data[k].balance = Number(proxyResponse.data[k].balance);
-      }
+      input.forEach(item => proxyResponse.data[i] = assignResponseData(item));
+      // for (var k = 0; k < input.length; k++) {
+      //   proxyResponse.data[k] = assignResponseData(input[k]);
+        // proxyResponse.data[k] = input[k];
+        // proxyResponse.data[k].balance = Number(proxyResponse.data[k].balance);
+      // }
       proxyResponse.links = {
         collection: {
           href: joinLink(ctx.reqScheme, ctx.proxyHost, [basepath, pathsuffix])
         }
       };
       proxyResponse.total = input.length;
-    } else if (pathsuffix.includes(ctx.itemId)) {
-      proxyResponse.data = input;
-      proxyResponse.data.balance = Number(proxyResponse.data.balance);
+    } // if GET /clients
+    if (pathsuffix !== "/clients" && pathsuffix.includes(ctx.itemId)) {
+      proxyResponse.data = assignResponseData(input);
+      // proxyResponse.data = {};
+      // Object.keys(input).forEach(key => {
+      //   proxyResponse.data[key] = input[key];
+      //   if (key === "balance") {
+      //     proxyResponse.data[key] = Number(proxyResponse.data[key]);
+      //   }
+      // });
       proxyResponse.links = {
         self: {
           href: joinLink(ctx.reqScheme, ctx.proxyHost, [basepath, pathsuffix])
         }
       };
-    } // if GET /clients OR /clients/{clientId}
-
-    if (pathsuffix === "/clients" && ctx.reqVerb === "POST") {
-      proxyResponse.links = {
-        self: {
-          href: joinLink(ctx.reqScheme, ctx.proxyHost, [basepath, pathsuffix, ctx.itemId])
-        }
-      };
-    } // if POST /clients
-
-    if (pathsuffix === "/clients" && ctx.reqVerb === "PATCH") {
-      proxyResponse.links = {
-        self: {
-          href: joinLink(ctx.reqScheme, ctx.proxyHost, [basepath, pathsuffix, ctx.itemId])
-        }
-      };
-    } // if PATCH /clients -> balance or name
+    } // if GET /clients/{clientId}
   }
-  console.log("proxyResponse >>> ", proxyResponse);
+
+  if (entity === "clients" && ctx.reqVerb === "POST") {
+    proxyResponse.links = {
+      self: {
+        href: joinLink(ctx.reqScheme, ctx.proxyHost, [basepath, pathsuffix, ctx.itemId])
+      }
+    };
+  } // if POST /clients
+
+  if (entity === "clients" && ctx.reqVerb === "PATCH" && pathsuffix.includes(ctx.itemId)) {
+    proxyResponse.data = {};
+    Object.keys(input).forEach(key => proxyResponse.data[key] = input[key]);
+    proxyResponse.links = {
+      self: {
+        href: joinLink(ctx.reqScheme, ctx.proxyHost, [basepath, pathsuffix, ctx.itemId])
+      }
+    };
+  } // if PATCH /clients -> balance, name, package
+  // console.log("proxyResponse >>> ", proxyResponse);
   return proxyResponse;
+}
+
+function assignResponseData(input) {
+  const data = {};
+  Object.keys(input).forEach(key => {
+    data[key] = input[key];
+    if (key === "balance") {
+      data[key] = Number(data[key]);
+    }
+    if (key === "package" && typeof input[key] === "object") {
+      data.key = {};
+      Object.keys(input[key]).forEach(field => {
+        data[key][field] = input[key][field];
+        if (field === "createdTime") {
+          data[key][field] = timeToISO(input[key][field]);
+        }
+        data[key][field] = input[key][field];
+      });
+    }
+  });
+  return data;
 }
 
 if (!module) {

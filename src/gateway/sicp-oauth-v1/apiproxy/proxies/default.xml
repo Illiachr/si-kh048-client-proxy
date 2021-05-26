@@ -26,6 +26,7 @@
       </Step>
       <Step>
         <Name>VAK-VerifyKey</Name>
+        <Condition>request.verb != "OPTIONS"</Condition>
       </Step>
       <Step>
         <Name>Q-EnforceQuota</Name>

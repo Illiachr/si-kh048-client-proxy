@@ -5,7 +5,10 @@
   const originalResponse = context.getVariable("response.content");
 
   try {
-    parsedResponse = JSON.parse(originalResponse);
+    if (originalResponse.lenght) {
+      parsedResponse = JSON.parse(originalResponse);
+    } else { parsedResponse = {}; }
+    
   } catch (err) {
     throw new Error("Response was not formatted as JSON");
   }
