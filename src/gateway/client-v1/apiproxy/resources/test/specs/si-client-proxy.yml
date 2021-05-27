@@ -112,7 +112,7 @@ components:
 
   responses:
     401UnauthorizedError:
-      description: Token is missing or invalid, or the user does not have access to perform the action
+      description: Missing credentials
       content:
         application/json:
           schema:
@@ -182,9 +182,6 @@ components:
       type: http
       scheme: bearer
 
-security:
-  - ApiKeyAuth: []
-
 paths:
   /catalog/packages/base:
     get:
@@ -220,19 +217,18 @@ paths:
                     type: number
                     format: int32
                     example: 2
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401UnauthorizedError"
         "500":
-          description: Internal error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
+          $ref: "#/components/responses/500InternalError"
   /catalog/products:
     get:
       tags:
         - catalog
+      security:
+        - ApiKeyAuth: []
       summary: List of Products
       operationId: getProductsList
       description: Get list of Products
@@ -267,15 +263,12 @@ paths:
                     type: number
                     format: int32
                     example: 2
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401UnauthorizedError"
         "500":
-          description: Internal error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
+          $ref: "#/components/responses/500InternalError"
 
   /clients/{id}/balance:
     patch:
@@ -521,8 +514,15 @@ paths:
                   format: string
                   example: Client Name
       responses:
-        "204":
+        "201":
           description: Client successfully added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  links:
+                    $ref: "#/components/schemas/SelfLink"
         "400":
           $ref: "#/components/responses/400BadRequest"
         "401":
@@ -637,8 +637,16 @@ paths:
           schema:
             type: string
       responses:
-        "204":
-          description: OK
+        "200":
+          description: Client successfully deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Client successfully deleted
         "500":
           description: Internal error
           content:

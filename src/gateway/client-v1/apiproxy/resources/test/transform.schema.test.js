@@ -3,7 +3,6 @@ const path = require("path");
 const jestOpenAPI = require("jest-openapi");
 const { transform } = require("../jsc/utils");
 
-// eslint-disable-next-line no-undef
 const openApiFilePath = path.normalize(path.join(__dirname, "./specs/si-client-proxy.yml"));
 
 jestOpenAPI(openApiFilePath);

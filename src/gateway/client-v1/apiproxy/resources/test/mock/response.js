@@ -41,7 +41,14 @@ module.exports.CLIENT = {
   "id":"ccaab0f7-3bd3-4417-8a9f-a2843f422917",
   "name":"Jane",
   "balance":"9310.296875",
-  "package":"b0fc4281-0e21-46ac-bd85-975edd26b689",
+  "package":"b0fc4281-0e21-46ac-bd85-975edd26b689"
+};
+
+module.exports.CLIENT_NULL_PACKAGE = {
+  "id":"ccaab0f7-3bd3-4417-8a9f-a2843f422917",
+  "name":"Jane",
+  "balance":"9310.296875",
+  "package": null
 };
 
 module.exports.CLIENT_INFO = {

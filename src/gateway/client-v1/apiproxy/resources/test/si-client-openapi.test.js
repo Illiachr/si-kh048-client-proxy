@@ -1,16 +1,9 @@
 require("dotenv").config();
 const path = require("path");
-const jestOpenAPI = require("jest-openapi");
+require("jest-openapi")(path.normalize(path.join(__dirname, "./specs/si-client-proxy.yml")));
 const axios = require("axios");
 
-// eslint-disable-next-line no-undef
-const openApiFilePath = path.normalize(path.join(__dirname, "./specs/si-client-proxy.yml"));
-
-jestOpenAPI(openApiFilePath);
-
-// eslint-disable-next-line no-undef
 const apikey = process.env.API_KEY;
-// eslint-disable-next-line no-undef
 const authorization = process.env.TOKEN_CLIENT;
 const basepath = "https://illiadev93-eval-test.apigee.net/sicp/api/v1";
 
@@ -19,7 +12,7 @@ describe("Catalog", () => {
     headers: { apikey }
   };
   describe("GET requests", () => {
-    describe("Base packages: valid response", () => {
+    describe.skip("Base packages: valid response", () => {
       let response = null;
       const requestUrl = basepath + "/catalog/packages/base";
 			
@@ -59,9 +52,9 @@ describe("Clients", () => {
     describe("Client by ID", () => {
       let response = null;
       const id = "ccaab0f7-3bd3-4417-8a9f-a2843f422917";      
-      const requestUrl = basepath + "/" +"clients" + "/" + id;
+      const requestUrl = basepath + "/" +"clients" + "/" + process.env.TEST_CLIENT_ID;
       const options = { 
-        headers: { authorization, apikey }
+        headers: { authorization: process.env.TOKEN_TEST_CLIENT, apikey }
       };
 
       beforeAll(async() => {
@@ -76,7 +69,7 @@ describe("Clients", () => {
         expect(response).toSatisfyApiSpec();
       });
     }); // describe Client by ID
-    describe("Clients List", () => {
+    describe.skip("Clients List", () => {
       let response = null;  
       const requestUrl = basepath + "/" +"clients";
       const options = { 
@@ -97,17 +90,12 @@ describe("Clients", () => {
       });
     }); // describe Clients List
   }); // describe GET requests
-  describe("POST requests", () => {
-    // eslint-disable-next-line no-undef
-    if (process.env.TEST_CLIENT_ADD) {
-      return;
-    }
+  describe.skip("POST requests", () => {
     describe("add client", () => {
       let response = null;  
       const requestUrl = basepath + "/" +"clients";
       const body = { name: "Jest Test"};
       const options = { 
-        // eslint-disable-next-line no-undef
         headers: { authorization: process.env.TOKEN_TEST_CLIENT, apikey }
       };
 
@@ -115,8 +103,8 @@ describe("Clients", () => {
         response = await axios.post(requestUrl, body, options);
       });
 			
-      it("should return a 200 response", () => {
-        expect(response.status).toEqual(200);
+      it("should return a 201 response", () => {
+        expect(response.status).toEqual(201);
       });
 			
       it("should satisfy the OpenAPI spec", () => {
@@ -124,14 +112,13 @@ describe("Clients", () => {
       });
     });
   }); // POST request: /{clientId}
-  describe("PATCH requests", () => {
+  describe.skip("PATCH requests", () => {
     describe("update client name", () => {
       let response = null;  
-      const requestUrl = basepath + "/" +"clients" + "/" + process.env.CLIENT_ID;
-      const body = { name: "Jane Patched By Jest Test"};
+      const requestUrl = basepath + "/" +"clients" + "/" + process.env.TEST_CLIENT_ID;
+      const body = { name: "J. Harper Patched By Jest"};
       const options = { 
-        // eslint-disable-next-line no-undef
-        headers: { authorization: process.env.TOKEN_CLIENT, apikey }
+        headers: { authorization: process.env.TOKEN_TEST_CLIENT, apikey }
       };
 
       beforeAll(async() => {
@@ -148,11 +135,10 @@ describe("Clients", () => {
     }); // /{clientId}
     describe("topup client balance", () => {
       let response = null;  
-      const requestUrl = basepath + "/" +"clients" + "/" + process.env.CLIENT_ID + "/" + "balance";
-      const body = { amount: 5000.789};
+      const requestUrl = basepath + "/" +"clients" + "/" + process.env.TEST_CLIENT_ID + "/" + "balance";
+      const body = { amount: 5000.789 };
       const options = { 
-        // eslint-disable-next-line no-undef
-        headers: { authorization: process.env.TOKEN_CLIENT, apikey }
+        headers: { authorization: process.env.TOKEN_TEST_CLIENT, apikey }
       };
 
       beforeAll(async() => {
@@ -169,17 +155,16 @@ describe("Clients", () => {
     }); // /balance
     describe("client buy package", () => {
       let response = null;  
-      const requestUrl = basepath + "/" +"clients" + "/" + process.env.CLIENT_ID + "/" + "package";
+      const requestUrl = basepath + "/" +"clients" + "/" + process.env.TEST_CLIENT_ID + "/" + "package";
       const body = {
         "name": "JEST TEST PACKAGE" + Date.now(),
         "description": "JEST TEST PACKAGE",
         "productIds": [
-          "d6f2bc4d-951f-4cdd-8ea0-86544a982cf8"
+          "fe2aba49-45cd-4096-8150-094dfbd38258"
         ]
       };
       const options = { 
-        // eslint-disable-next-line no-undef
-        headers: { authorization: process.env.TOKEN_CLIENT, apikey }
+        headers: { authorization: process.env.TOKEN_TEST_CLIENT, apikey }
       };
 
       beforeAll(async() => {
@@ -196,16 +181,11 @@ describe("Clients", () => {
     }); // /package
   }); // PATCH requests
   describe("DELETE requests", () => {
-    // eslint-disable-next-line no-undef
-    if (process.env.TEST_CLIENT_ADD) {
-      return;
-    }
-    describe("delete client", () => {
+    describe.skip("delete client", () => {
       let response = null;  
       const requestUrl = basepath + "/" +"clients" + "/" + process.env.TEST_CLIENT_ID;
       const options = { 
-        // eslint-disable-next-line no-undef
-        headers: { authorization: process.env.TOKEN_TEST_CLIENT, apikey }
+        headers: { authorization: process.env.TOKEN_ADMIN, apikey }
       };
 
       beforeAll(async() => {

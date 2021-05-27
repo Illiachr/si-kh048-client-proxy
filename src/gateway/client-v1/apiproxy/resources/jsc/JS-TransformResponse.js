@@ -26,13 +26,16 @@
     itemId: context.getVariable("urirequest.id") || context.getVariable("accesstoken.CUID"),
   };
 
+  if (envCtx.reqVerb === "POST" && envCtx.pathsuffix === "/clients" && responseStatus === "204" ) {
+    context.setVariable("response.status.code", "201");
+    context.setVariable("response.status.phrase", "Created");
+    response = transform(entity, {}, envCtx);
+    context.setVariable("response.content", JSON.stringify(response, null, 2));
+  }
+
+
   if (parsedResponse) {
     response = transform(entity, parsedResponse, envCtx);
     context.setVariable("response.content", JSON.stringify(response, null, 2));
-
-    if (envCtx.reqVerb === "POST" && envCtx.pathsuffix === "/clients" && responseStatus === "204" ) {
-      context.setVariable("response.status.code", "201");
-      context.setVariable("response.status.phrase", "Created");
-    }
   }
 })();

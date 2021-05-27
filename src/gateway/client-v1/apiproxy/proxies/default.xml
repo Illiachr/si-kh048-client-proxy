@@ -61,7 +61,7 @@
         <Response>
             <Step>
                 <Name>JS-TransformResponse</Name>
-                <Condition>(req_verb != "OPTIONS") or (req_verb != "DELETE")</Condition>
+                <Condition>(req_verb != "OPTIONS") and (req_verb != "DELETE")</Condition>
             </Step>
         </Response>
     </PostFlow>
