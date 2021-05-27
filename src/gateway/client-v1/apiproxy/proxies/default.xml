@@ -9,27 +9,38 @@
                 <Name>AM-400JSONThreat</Name>
             </Step>
         </FaultRule>
-        <FaultRule name="InvalidToken">
-            <Step>
-                <Name>RF-401TokenInvalid</Name>
-            </Step>
-            <Condition>fault.name = "invalid_access_token"</Condition>
-        </FaultRule>
-        <FaultRule name="ExpiredToken">
-            <Step>
-                <Name>AM-401TokenExpired</Name>
-            </Step>
-            <Condition>fault.name = "access_token_expired"</Condition>
-        </FaultRule>
         <FaultRule name="FailedToResolveAPIKey">
             <Condition>verifyapikey.VAK-VerifyKey.failed = true</Condition>
             <Step>
-                <Name>RF-401APIKey</Name>
+                <Name>AM-SetInvalidApiKeyErrVar</Name>
                 <Condition>(fault.name Matches "FailedToResolveAPIKey") or  (fault.name Matches "InvalidApiKey")</Condition>
             </Step>
         </FaultRule>
+        <FaultRule name="ExpiredAccessToken">
+            <Condition>(fault.name = "access_token_expired")</Condition>
+            <Step>
+                <Name>AM-SetExpiredTokenErrVar</Name>
+            </Step>
+        </FaultRule>
+        <FaultRule name="InvalidAccessToken">
+            <Condition>(fault.name = "invalid_access_token") or (fault.name = "InvalidAccessToken")</Condition>
+            <Step>
+                <Name>AM-SetInvalidTokenErrVar</Name>
+            </Step>
+        </FaultRule>
     </FaultRules>
-    <DefaultFaultRule>
+    <DefaultFaultRule name="all">
+    <AlwaysEnforce>true</AlwaysEnforce>
+        <Step>
+            <Condition>(siclient.error.code = null)</Condition>
+            <Name>AM-SetInternalServerErrVar</Name>
+        </Step>
+        <!-- <Step>
+            <Name>ServiceCallout.LogError</Name>
+        </Step> -->
+        <Step>
+            <Name>RF-SetFaultJSON</Name>
+        </Step>
     </DefaultFaultRule>
     <PreFlow name="PreFlow">
         <Request>
@@ -83,7 +94,7 @@
                     <Name>AM-SetCORSHeaders</Name>
                 </Step>
             </Response>
-            <Condition>request.verb == "OPTIONS" AND request.header.origin != null AND request.header.Access-Control-Request-Method != null</Condition> 
+            <Condition>request.verb == "OPTIONS" AND request.header.origin != null AND request.header.Access-Control-Request-Method != null</Condition>
         </Flow>
     </Flows>
     <HTTPProxyConnection>

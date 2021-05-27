@@ -8,12 +8,7 @@
     </PreFlow>
     <PostFlow name="PostFlow">
         <Request/>
-        <Response>
-            <Step>
-                <Condition>request.header.Origin != null</Condition>
-                <Name>AM-SetCORSHeader</Name>
-            </Step>
-        </Response>
+        <Response/>
     </PostFlow>
     <Flows>
         <Flow name="getBasePackagesList">

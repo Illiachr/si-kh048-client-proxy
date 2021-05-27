@@ -1,0 +1,23 @@
+<AssignMessage name="AM-SetInternalServerErrVar">
+  <DisplayName>AM-SetInternalServerErrVar</DisplayName>
+  <AssignVariable>
+    <Name>siclient.error.code</Name>
+    <Value>500</Value>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>siclient.error.message</Name>
+    <Value>internal server error</Value>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>siclient.error.info</Name>
+    <Value>https://developers.myapi.com</Value>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>siclient.error.status</Name>
+    <Value>500</Value>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>siclient.error.reason</Name>
+    <Value>Internal Server Error</Value>
+  </AssignVariable>
+</AssignMessage>

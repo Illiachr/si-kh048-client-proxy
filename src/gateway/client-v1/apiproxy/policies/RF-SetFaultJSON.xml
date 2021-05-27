@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault name="RF-SetFaultJSON">
+    <DisplayName>RF-SetFaultJSON</DisplayName>
+    <FaultResponse>
+        <Set>
+            <Headers>
+                <Header name="Content-Type">application/json</Header>
+            </Headers>
+            <Payload contentType="application/json">{ 
+              "code": "{siclient.error.code}",
+              "message": "{siclient.error.message}",
+              "info": "{siclient.error.info}"
+            }</Payload>
+            <StatusCode>{siclient.error.status}</StatusCode>
+            <ReasonPhrase>{siclient.error.reason}</ReasonPhrase>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>

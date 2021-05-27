@@ -1,0 +1,23 @@
+<AssignMessage name="AM-SetExpiredTokenErrVar">
+  <DisplayName>AM-SetExpiredTokenErrVar</DisplayName>
+  <AssignVariable>
+    <Name>siclient.error.code</Name>
+    <Value>400</Value>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>siclient.error.message</Name>
+    <Ref>error.message</Ref>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>siclient.error.info</Name>
+    <Value>https://illiadev93-eval-si.apigee.io</Value>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>siclient.error.status</Name>
+    <Value>400</Value>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>siclient.error.reason</Name>
+    <Value>Bad Request</Value>
+  </AssignVariable>
+</AssignMessage>
