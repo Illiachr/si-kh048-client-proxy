@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Javascript async="false" continueOnError="false" enabled="true" timeLimit="200" name="JS-raiseTargetFault">
+    <DisplayName>JS-raiseTargetFault</DisplayName>
+    <Properties/>
+    <ResourceURL>jsc://JS-raiseTargetFault.js</ResourceURL>
+</Javascript>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <AssignMessage async="false" continueOnError="false" enabled="true" name="AM-SetJSONThreatErrVar">
-    <DisplayName>AM-SetInvalidTokenErrVar</DisplayName>
+    <DisplayName>AM-SetJSONThreatErrVar</DisplayName>
     <AssignVariable>
         <Name>jsonThreatErrorRegex</Name>
         <Value>JSONThreatProtection\[JTP-Protect\]\: Execution failed. reason\: JSONThreatProtection\[JTP-Protect\]\: </Value>
@@ -11,7 +11,7 @@
     </AssignVariable>
     <AssignVariable>
         <Name>siclient.error.message</Name>
-        <Value>Invalid JSON payload: {replaceFirst(error.message,jsonThreatErrorRegex,'')}</Value>
+        <Template>Invalid JSON payload: {replaceFirst(error.message,jsonThreatErrorRegex,'')}</Template>
     </AssignVariable>
     <AssignVariable>
         <Name>siclient.error.info</Name>

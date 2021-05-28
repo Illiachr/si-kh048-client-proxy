@@ -6,7 +6,7 @@
             <Condition>jsonattack.JTP-Protect.failed == true</Condition>
             <Step>
                 <Condition>fault.name Matches "ExecutionFailed"</Condition>
-                <Name>AM-400JSONThreat</Name>
+                <Name>AM-SetJSONThreatErrVar</Name>
             </Step>
         </FaultRule>
         <FaultRule name="FailedToResolveAPIKey">
@@ -32,12 +32,13 @@
     <DefaultFaultRule name="all">
     <AlwaysEnforce>true</AlwaysEnforce>
         <Step>
+            <Name>JS-raiseTargetFault</Name>
+            <Condition>(error.state == "TARGET_RESP_FLOW") and (response.status.code &gt;= 400) and (response.status.code != 500)</Condition>
+        </Step>
+        <Step>
             <Condition>(siclient.error.code = null)</Condition>
             <Name>AM-SetInternalServerErrVar</Name>
         </Step>
-        <!-- <Step>
-            <Name>ServiceCallout.LogError</Name>
-        </Step> -->
         <Step>
             <Name>RF-SetFaultJSON</Name>
         </Step>

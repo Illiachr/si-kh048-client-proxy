@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RF-SetNotFoundErrVar">
+    <DisplayName>RF-SetNotFoundErrVar</DisplayName>
+    <FaultResponse>
+        <AssignVariable>
+            <Name>siclient.error.code</Name>
+            <Value>404</Value>
+        </AssignVariable>
+        <AssignVariable>
+            <Name>siclient.error.message</Name>
+            <Template>Invalid request: {request.verb} {proxy.basepath}{proxy.pathsuffix}</Template>
+        </AssignVariable>
+        <AssignVariable>
+            <Name>siclient.error.info</Name>
+            <Value>https://illiadev93-eval-si.apigee.io</Value>
+        </AssignVariable>
+        <AssignVariable>
+            <Name>siclient.error.status</Name>
+            <Value>404</Value>
+        </AssignVariable>
+        <AssignVariable>
+            <Name>siclient.error.reason</Name>
+            <Value>Not Found</Value>
+        </AssignVariable>
+    </FaultResponse>
+</RaiseFault>

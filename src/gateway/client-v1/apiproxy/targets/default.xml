@@ -8,7 +8,11 @@
     </PreFlow>
     <PostFlow name="PostFlow">
         <Request/>
-        <Response/>
+        <Response>
+            <Step>
+                <Name>JS-raiseTargetFault</Name>
+            </Step>
+        </Response>
     </PostFlow>
     <Flows>
         <Flow name="getBasePackagesList">
@@ -40,7 +44,7 @@
             <Request>
                 <Step>
                     <Condition>accesstoken.ROLE != "admin"</Condition>
-                    <Name>RF-403NoPremission</Name>
+                    <Name>RF-SetPremissionErrVar</Name>
                 </Step>
                 <Step>
                     <Name>FC-JWTGenerateRS256Flow</Name>
@@ -62,7 +66,7 @@
             <Request>        
                 <Step>
                     <Condition>urirequest.id != accesstoken.CUID</Condition>
-                    <Name>RF-403NoPremission</Name>
+                    <Name>RF-SetPremissionErrVar</Name>
                 </Step>
                 <Step>
                     <Name>FC-JWTGenerateRS256Flow</Name>
@@ -79,7 +83,7 @@
             <Request>
                 <Step>
                     <Condition>urirequest.id != accesstoken.CUID</Condition>
-                    <Name>RF-403NoPremission</Name>
+                    <Name>RF-SetPremissionErrVar</Name>
                 </Step>
                 <Step>
                     <Name>FC-JWTGenerateRS256Flow</Name>
@@ -109,7 +113,7 @@
             <Request>
                 <Step>
                     <Condition>(urirequest.id != accesstoken.CUID) and (accesstoken.ROLE != "admin")</Condition>
-                    <Name>RF-403NoPremission</Name>
+                    <Name>RF-SetPremissionErrVar</Name>
                 </Step>
                 <Step>
                     <Name>FC-JWTGenerateRS256Flow</Name>
@@ -126,7 +130,7 @@
             <Request>
                 <Step>
                     <Condition>(accesstoken.ROLE != "admin")</Condition>
-                    <Name>RF-403NoPremission</Name>
+                    <Name>RF-SetPremissionErrVar</Name>
                 </Step>
                 <Step>
                     <Name>FC-JWTGenerateRS256Flow</Name>
@@ -143,7 +147,7 @@
             <Request>
                 <Step>
                     <Condition>(urirequest.id != accesstoken.CUID) and (accesstoken.ROLE != "admin")</Condition>
-                    <Name>RF-403NoPremission</Name>
+                    <Name>RF-SetPremissionErrVar</Name>
                 </Step>
                 <Step>
                     <Name>FC-JWTGenerateRS256Flow</Name>
@@ -160,7 +164,7 @@
             <Request>
                 <Step>
                     <Condition>(urirequest.id != accesstoken.CUID) and (accesstoken.ROLE != "admin")</Condition>
-                    <Name>RF-403NoPremission</Name>
+                    <Name>RF-SetPremissionErrVar</Name>
                 </Step>
                 <Step>
                     <Name>FC-JWTGenerateRS256Flow</Name>
@@ -176,7 +180,7 @@
             <Description>404NotFound</Description>
             <Request>
                 <Step>
-                    <Name>RF-404NotFound</Name>
+                    <Name>RF-SetNotFoundErrVar</Name>
                 </Step>
             </Request>
             <Response/>
