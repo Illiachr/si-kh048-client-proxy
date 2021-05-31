@@ -9,7 +9,7 @@
     <ExpiresIn>30m</ExpiresIn>
     <Id/>
     <AdditionalClaims>
-        <Claim name="role" ref="request.formparam.role"/>
+        <Claim name="role" ref="request.formparam.user_role"/>
     </AdditionalClaims>
     <OutputVariable>jwtToken</OutputVariable>
 </GenerateJWT>

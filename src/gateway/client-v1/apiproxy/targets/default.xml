@@ -10,7 +10,7 @@
         <Request/>
         <Response>
             <Step>
-                <Name>JS-raiseTargetFault</Name>
+                <Name>JS-RaiseTargetFault</Name>
                 <Condition>(response.status.code >= 400) and (response.status.code != 500)</Condition>
             </Step>
         </Response>

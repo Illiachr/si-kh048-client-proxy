@@ -48,7 +48,7 @@
   if (
     envCtx.reqVerb === "POST" &&
     envCtx.pathsuffix === "/clients" &&
-    responseStatus === "204"
+    responseStatus === 204
   ) {
     context.setVariable("response.status.code", "201");
     context.setVariable("response.status.phrase", "Created");
