@@ -24,13 +24,6 @@
       <Step>
         <Name>SA-SpikeArrest</Name>
       </Step>
-      <Step>
-        <Name>VAK-VerifyKey</Name>
-        <Condition>request.verb != "OPTIONS"</Condition>
-      </Step>
-      <Step>
-        <Name>Q-EnforceQuota</Name>
-      </Step>
     </Request>
     <Response/>
   </PreFlow>
@@ -61,6 +54,9 @@
         </Step>
         <Step>
           <Name>EV-ExtractUserGrant</Name>
+        </Step>
+        <Step>
+          <Name>FC-JWTGenerateRS256Flow</Name>
         </Step>
         <Step>
           <Name>OAuthV2-GenAccessToken</Name>

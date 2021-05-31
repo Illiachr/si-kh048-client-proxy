@@ -12,7 +12,7 @@
 	</AssignVariable>
   <Set>
     <Headers>
-      <Header name="Authorization">Bearer {jwtToken}</Header>
+      <Header name="Authorization">Bearer {accesstoken.JWT}</Header>
       <Header name="Cache-Control">no-cache</Header>
     </Headers>
   </Set>

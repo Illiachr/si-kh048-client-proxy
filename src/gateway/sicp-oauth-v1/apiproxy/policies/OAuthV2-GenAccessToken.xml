@@ -11,6 +11,7 @@
     <Attributes>
         <Attribute name="CUID" ref="request.header.cuid" display="false"/>
         <Attribute name="ROLE" ref="request.formparam.user_role" display="false"/>
+        <Attribute name="JWT" ref="accesstoken.JWT" display="false"/>
     </Attributes>
     <GenerateResponse enabled='true'/>
 </OAuthV2>

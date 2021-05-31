@@ -11,6 +11,7 @@
         <Response>
             <Step>
                 <Name>JS-raiseTargetFault</Name>
+                <Condition>(response.status.code >= 400) and (response.status.code != 500)</Condition>
             </Step>
         </Response>
     </PostFlow>
@@ -47,9 +48,6 @@
                     <Name>RF-SetPremissionErrVar</Name>
                 </Step>
                 <Step>
-                    <Name>FC-JWTGenerateRS256Flow</Name>
-                </Step>
-                <Step>
                     <Name>AM-SetGetClientsListReqInfo</Name>
                     <Condition>urirequest.filter = null</Condition>
                 </Step>
@@ -69,9 +67,6 @@
                     <Name>RF-SetPremissionErrVar</Name>
                 </Step>
                 <Step>
-                    <Name>FC-JWTGenerateRS256Flow</Name>
-                </Step>
-                <Step>
                     <Name>AM-SetGetClientByIdReqInfo</Name>
                 </Step>
             </Request>
@@ -86,9 +81,6 @@
                     <Name>RF-SetPremissionErrVar</Name>
                 </Step>
                 <Step>
-                    <Name>FC-JWTGenerateRS256Flow</Name>
-                </Step>
-                <Step>
                     <Name>AM-SetBuyPackageReqInfo</Name>
                 </Step>
             </Request>
@@ -98,9 +90,6 @@
         <Flow name="addClient">
             <Description>Add new client</Description>
             <Request>
-                <Step>
-                    <Name>FC-JWTGenerateRS256Flow</Name>
-                </Step>
                 <Step>
                     <Name>AM-SetAddClientReqInfo</Name>
                 </Step>
@@ -114,9 +103,6 @@
                 <Step>
                     <Condition>(urirequest.id != accesstoken.CUID) and (accesstoken.ROLE != "admin")</Condition>
                     <Name>RF-SetPremissionErrVar</Name>
-                </Step>
-                <Step>
-                    <Name>FC-JWTGenerateRS256Flow</Name>
                 </Step>
                 <Step>
                     <Name>AM-SetGetClientInfoReqInfo</Name>
@@ -133,9 +119,6 @@
                     <Name>RF-SetPremissionErrVar</Name>
                 </Step>
                 <Step>
-                    <Name>FC-JWTGenerateRS256Flow</Name>
-                </Step>
-                <Step>
                     <Name>AM-SetDeleteClientReqInfo</Name>
                 </Step>
             </Request>
@@ -150,9 +133,6 @@
                     <Name>RF-SetPremissionErrVar</Name>
                 </Step>
                 <Step>
-                    <Name>FC-JWTGenerateRS256Flow</Name>
-                </Step>
-                <Step>
                     <Name>AM-SetPatchClientReqInfo</Name>
                 </Step>
             </Request>
@@ -165,9 +145,6 @@
                 <Step>
                     <Condition>(urirequest.id != accesstoken.CUID) and (accesstoken.ROLE != "admin")</Condition>
                     <Name>RF-SetPremissionErrVar</Name>
-                </Step>
-                <Step>
-                    <Name>FC-JWTGenerateRS256Flow</Name>
                 </Step>
                 <Step>
                     <Name>AM-SetBalanceTopupReqInfo</Name>

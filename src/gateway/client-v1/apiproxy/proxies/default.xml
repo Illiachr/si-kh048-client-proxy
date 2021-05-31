@@ -32,7 +32,7 @@
     <DefaultFaultRule name="all">
     <AlwaysEnforce>true</AlwaysEnforce>
         <Step>
-            <Name>JS-raiseTargetFault</Name>
+            <Name>JS-RaiseTargetFault</Name>
             <Condition>(error.state == "TARGET_RESP_FLOW") and (response.status.code &gt;= 400) and (response.status.code != 500)</Condition>
         </Step>
         <Step>

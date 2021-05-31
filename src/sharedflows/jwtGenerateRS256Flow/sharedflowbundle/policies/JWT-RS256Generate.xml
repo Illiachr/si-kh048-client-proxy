@@ -5,11 +5,11 @@
     <PrivateKey>
         <Value ref="private.privatekey"/>
     </PrivateKey>
-    <Subject ref="accesstoken.CUID"/>
-    <ExpiresIn>5m</ExpiresIn>
+    <Subject ref="request.header.cuid"/>
+    <ExpiresIn>30m</ExpiresIn>
     <Id/>
     <AdditionalClaims>
-        <Claim name="role" ref="accesstoken.ROLE"/>
+        <Claim name="role" ref="request.formparam.role"/>
     </AdditionalClaims>
     <OutputVariable>jwtToken</OutputVariable>
 </GenerateJWT>
