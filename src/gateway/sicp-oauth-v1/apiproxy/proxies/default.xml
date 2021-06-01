@@ -11,6 +11,9 @@
         <Name>SA-SpikeArrest</Name>
       </Step>
       <Step>
+        <Name>FC-JWTGenerateRS256Flow</Name>
+      </Step>
+      <Step>
           <Name>OAuthV2-GenAccessToken</Name>
       </Step>
     </Request>
@@ -24,7 +27,7 @@
         <Name>AM-SetCORSHeaders</Name>
       </Step>
       <Step>
-        <Name>AM-TokenResponse</Name>
+        <Name>AM-SetResponseVariables</Name>
       </Step>
     </Response>
   </PostFlow>
