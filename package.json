@@ -7,8 +7,8 @@
     "test": "jest --config=jest.config.js",
     "test:utils": "jest --config=jest.unit.config.js utils.test.js",
     "test:transform": "jest --config=jest.unit.config.js transform.schema.test.js",
-    "test:oas": "jest --watch --config=jest.unit.config.js si-client-openapi.test.js",
-    "test:intnegative": "jest --config=jest.unit.config.js si-client.negative.int.test.js"
+    "test:getreq": "jest --config=jest.unit.config.js getReq.int.test.js",
+    "test:getreq-negative": "jest --config=jest.unit.config.js getReq.negative.int.test.js"
   },
   "keywords": [
     "jest",

@@ -1,22 +1,24 @@
 require("dotenv").config();
 const path = require("path");
 require("jest-openapi")(
-  path.normalize(path.join(__dirname, "./specs/si-client-proxy.yml"))
+  path.normalize(path.join(__dirname, "../specs/si-client-proxy.yml"))
 );
 const axios = require("axios");
 
 const apikey = process.env.API_KEY;
 const authorization = process.env.TOKEN_CLIENT;
-const basepath = "https://illiadev93-eval-test.apigee.net/sicp/api/v1";
+const basepath = process.env.BASE_PATH;
 
-describe("Test requests to Catalog Service", () => {
-  const options = {
-    headers: { apikey }
-  };
-  describe("GET requests", () => {
-    describe.skip("Base packages: valid response", () => {
+describe("GET requests. Positive case", () => {
+  describe("Catalog Service", () => {
+    const entity = "catalog";
+    const options = {
+      headers: { apikey }
+    };
+    describe("Base packages", () => {
       let response = null;
-      const requestUrl = basepath + "/catalog/packages/base";
+      const urlPath = [basepath, entity, "packages", "base"];
+      const requestUrl = urlPath.join("/");
 
       beforeAll(async () => {
         response = await axios.get(requestUrl, options);
@@ -32,7 +34,8 @@ describe("Test requests to Catalog Service", () => {
     }); // describe Base packages: valid response
     describe("Products list", () => {
       let response = null;
-      const requestUrl = basepath + "/catalog/products";
+      const urlPath = [basepath, entity, "products"];
+      const requestUrl = urlPath.join("/");
 
       beforeAll(async () => {
         response = await axios.get(requestUrl, options);
@@ -45,19 +48,15 @@ describe("Test requests to Catalog Service", () => {
       it("should satisfy the OpenAPI spec", () => {
         expect(response).toSatisfyApiSpec();
       });
-    }); // describe Products list
-  }); // describe GET requests
-}); // Test requests to Catalog Service
-
-describe("Clients", () => {
-  describe("GET requests", () => {
+    }); // Products list
+  }); // Catalog Service
+  describe("Clients Service", () => {
     describe("Client by ID", () => {
       let response = null;
-      const id = "ccaab0f7-3bd3-4417-8a9f-a2843f422917";
-      const requestUrl =
-        basepath + "/" + "clients" + "/" + process.env.TEST_CLIENT_ID;
+      const urlPath = [basepath, "clients", process.env.CLIENT_ID];
+      const requestUrl = urlPath.join("/");
       const options = {
-        headers: { authorization: process.env.TOKEN_TEST_CLIENT, apikey }
+        headers: { authorization, apikey }
       };
 
       beforeAll(async () => {
@@ -71,12 +70,12 @@ describe("Clients", () => {
       it("should satisfy the OpenAPI spec", () => {
         expect(response).toSatisfyApiSpec();
       });
-    }); // describe Client by ID
-    describe("Clients List", () => {
+    }); // Client by ID
+    describe("Positive behavior: Clients List", () => {
       let response = null;
-      const requestUrl = basepath + "/" + "clients";
+      const urlPath = [basepath, "clients"];
+      const requestUrl = urlPath.join("/");
       const options = {
-        // eslint-disable-next-line no-undef
         headers: { authorization: process.env.TOKEN_ADMIN, apikey }
       };
 
@@ -91,6 +90,6 @@ describe("Clients", () => {
       it("should satisfy the OpenAPI spec", () => {
         expect(response).toSatisfyApiSpec();
       });
-    }); // describe Clients List
-  }); // describe GET requests
-}); // describe Clients
+    }); // Clients List
+  }); // Clients Service
+}); // GET requests

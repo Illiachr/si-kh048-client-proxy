@@ -42,23 +42,25 @@ function transform(entity, input, ctx) {
     proxyResponse.total = input.length;
 
     switch (pathsuffix) {
-    case "/catalog/packages/base":
-      for (var i = 0; i < input.length; i++) {
-        input[i].createdTime = timeToISO(input[i].createdTime);
-        proxyResponse.data[i] = input[i];
-      }
-      break;
-    case "/catalog/products":
-      for (var j = 0; j < input.length; j++) {
-        proxyResponse.data[j] = input[j];
-      }
-      break;
+      case "/catalog/packages/base":
+        for (var i = 0; i < input.length; i++) {
+          input[i].createdTime = timeToISO(input[i].createdTime);
+          proxyResponse.data[i] = input[i];
+        }
+        break;
+      case "/catalog/products":
+        for (var j = 0; j < input.length; j++) {
+          proxyResponse.data[j] = input[j];
+        }
+        break;
     } // end switch
   } // end if
   if (entity === "clients" && ctx.reqVerb === "GET") {
     if (pathsuffix === "/clients") {
       proxyResponse.data = [];
-      input.forEach(item => proxyResponse.data[i] = assignResponseData(item));
+      input.forEach((item) =>
+        proxyResponse.data.push(assignResponseData(item))
+      );
       proxyResponse.links = {
         collection: {
           href: joinLink(ctx.reqScheme, ctx.proxyHost, [basepath, entity])
@@ -70,7 +72,11 @@ function transform(entity, input, ctx) {
       proxyResponse.data = assignResponseData(input);
       proxyResponse.links = {
         self: {
-          href: joinLink(ctx.reqScheme, ctx.proxyHost, [basepath, entity, ctx.itemId])
+          href: joinLink(ctx.reqScheme, ctx.proxyHost, [
+            basepath,
+            entity,
+            ctx.itemId
+          ])
         }
       };
     } // if GET /clients/{clientId}
@@ -79,17 +85,29 @@ function transform(entity, input, ctx) {
   if (entity === "clients" && ctx.reqVerb === "POST") {
     proxyResponse.links = {
       self: {
-        href: joinLink(ctx.reqScheme, ctx.proxyHost, [basepath, entity, ctx.itemId])
+        href: joinLink(ctx.reqScheme, ctx.proxyHost, [
+          basepath,
+          entity,
+          ctx.itemId
+        ])
       }
     };
   } // if POST /clients
 
-  if (entity === "clients" && ctx.reqVerb === "PATCH" && pathsuffix.includes(ctx.itemId)) {
+  if (
+    entity === "clients" &&
+    ctx.reqVerb === "PATCH" &&
+    pathsuffix.includes(ctx.itemId)
+  ) {
     proxyResponse.data = {};
-    Object.keys(input).forEach(key => proxyResponse.data[key] = input[key]);
+    Object.keys(input).forEach((key) => (proxyResponse.data[key] = input[key]));
     proxyResponse.links = {
       self: {
-        href: joinLink(ctx.reqScheme, ctx.proxyHost, [basepath, entity, ctx.itemId])
+        href: joinLink(ctx.reqScheme, ctx.proxyHost, [
+          basepath,
+          entity,
+          ctx.itemId
+        ])
       }
     };
   } // if PATCH /clients -> balance, name, package
@@ -98,7 +116,7 @@ function transform(entity, input, ctx) {
 
 function assignResponseData(input) {
   const data = {};
-  Object.keys(input).forEach(key => {
+  Object.keys(input).forEach((key) => {
     if (input[key]) {
       if (key !== "package") {
         data[key] = input[key];
@@ -106,7 +124,7 @@ function assignResponseData(input) {
         data[key] = input[key];
       } else {
         data[key] = {};
-        Object.keys(input[key]).forEach(field => {
+        Object.keys(input[key]).forEach((field) => {
           data[key][field] = input[key][field];
           if (field === "createdTime") {
             data[key][field] = timeToISO(input[key][field]);

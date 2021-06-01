@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Quota async="false" continueOnError="false" enabled="true" name="Q-EnforceQuota" type="calendar">
     <Identifier ref="client_id"/>
-    <Allow count="2" countRef="apiproduct.developer.quota.limit"/>
-    <Interval ref="apiproduct.developer.quota.interval">1</Interval>
-    <TimeUnit ref="apiproduct.developer.quota.timeunit">minute</TimeUnit>
+    <Allow count="2" countRef="verifyapikey.VAK-VerifyKey.apiproduct.developer.quota.limit"/>
+    <Interval ref="verifyapikey.VAK-VerifyKey.apiproduct.developer.quota.interval">1</Interval>
+    <TimeUnit ref="verifyapikey.VAK-VerifyKey.apiproduct.developer.quota.timeunit">minute</TimeUnit>
     <Distributed>true</Distributed>
     <Synchronous>true</Synchronous>
     <StartTime>2020-01-01 00:00:00</StartTime>

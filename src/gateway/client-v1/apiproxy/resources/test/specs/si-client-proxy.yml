@@ -217,8 +217,6 @@ paths:
                     type: number
                     format: int32
                     example: 2
-        "400":
-          $ref: "#/components/responses/400BadRequest"
         "401":
           $ref: "#/components/responses/401UnauthorizedError"
         "500":
@@ -263,8 +261,6 @@ paths:
                     type: number
                     format: int32
                     example: 2
-        "400":
-          $ref: "#/components/responses/400BadRequest"
         "401":
           $ref: "#/components/responses/401UnauthorizedError"
         "500":
@@ -484,7 +480,10 @@ paths:
                     type: number
                     format: int32
                     example: 2
-
+        "401":
+          $ref: "#/components/responses/401UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/403ForbiddenError"
         "500":
           description: Internal error
           content:
@@ -567,6 +566,10 @@ paths:
                           href:
                             type: string
                             example: "https://api-server/clients/3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        "401":
+          $ref: "#/components/responses/401UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/403ForbiddenError"
         "500":
           description: Internal error
           content:
