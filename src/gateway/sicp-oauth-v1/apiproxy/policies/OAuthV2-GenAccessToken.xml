@@ -3,8 +3,6 @@
     <Operation>GenerateAccessToken</Operation>
     <!-- 30 min -->
     <ExpiresIn>1800000</ExpiresIn>
-    <!-- 2 hours  -->
-    <!-- <RefreshTokenExpiresIn>7200000</RefreshTokenExpiresIn> -->
     <SupportedGrantTypes>
         <GrantType>client_credentials</GrantType>
     </SupportedGrantTypes>

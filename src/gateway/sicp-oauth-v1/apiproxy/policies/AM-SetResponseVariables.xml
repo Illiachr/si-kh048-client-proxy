@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<AssignMessage async="false" continueOnError="false" enabled="true" name="AM-TokenResponse">
-    <DisplayName>AM-TokenResponse</DisplayName>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AM-SetResponseVariables">
+    <DisplayName>AM-SetResponseVariables</DisplayName>
     <Set>
-        <Headers>
-            <Header name="Set-Cookie">refresh_token={oauthv2accesstoken.OAuthV2-GenAccessToken.refresh_token}; Path={proxy.basepath}; Secure; HttpOnly</Header>
-        </Headers>
         <Payload contentType="application/json">
             {
                 "token_type": "Bearer",
@@ -14,11 +11,9 @@
                 "scope": "{oauthv2accesstoken.OAuthV2-GenAccessToken.scope}"
             }
         </Payload>
+        <StatusCode>200</StatusCode>
+        <ReasonPhrase>OK</ReasonPhrase>
     </Set>
-    <Copy source="request">
-        <StatusCode>true</StatusCode>
-        <ReasonPhrase>true</ReasonPhrase>
-    </Copy>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
     <AssignTo createNew="true" transport="http" type="response"/>
 </AssignMessage>
