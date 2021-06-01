@@ -11,10 +11,7 @@
                 "access_token": "{oauthv2accesstoken.OAuthV2-GenAccessToken.access_token}",
                 "issued_at": {oauthv2accesstoken.OAuthV2-GenAccessToken.issued_at},
                 "expires_in": {oauthv2accesstoken.OAuthV2-GenAccessToken.expires_in},
-                "scope": "{oauthv2accesstoken.OAuthV2-GenAccessToken.scope}",
-                "refresh_token_issued_at": {oauthv2accesstoken.OAuthV2-GenAccessToken.refresh_token_issued_at},
-                "refresh_token_expires_in": {oauthv2accesstoken.OAuthV2-GenAccessToken.refresh_token_expires_in},
-                "refresh_count": {oauthv2accesstoken.OAuthV2-GenAccessToken.refresh_count}
+                "scope": "{oauthv2accesstoken.OAuthV2-GenAccessToken.scope}"
             }
         </Payload>
     </Set>

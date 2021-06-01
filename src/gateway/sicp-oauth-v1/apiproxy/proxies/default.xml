@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ProxyEndpoint name="default">
   <Description/>
-  <FaultRules>
-    <FaultRule name="JSONThreat">
-      <Condition>jsonattack.JTP-Protect.failed == true</Condition>
-      <Step>
-        <Condition>fault.name Matches "ExecutionFailed"</Condition>
-        <Name>AM-400JSONThreat</Name>
-      </Step>
-    </FaultRule>
-    <FaultRule name="FailedToResolveAPIKey">
-        <Step>
-          <Name>RF-401APIKey</Name>
-          <Condition>(fault.name Matches "FailedToResolveAPIKey") or  (fault.name Matches "InvalidApiKey") or  (fault.name Matches "InvalidApiKeyForGivenResource")</Condition>
-        </Step>
-    </FaultRule>
-  </FaultRules>
+  <FaultRules/>
   <DefaultFaultRule>
       <AlwaysEnforce>true</AlwaysEnforce>
   </DefaultFaultRule>
@@ -23,6 +9,9 @@
     <Request>
       <Step>
         <Name>SA-SpikeArrest</Name>
+      </Step>
+      <Step>
+          <Name>OAuthV2-GenAccessToken</Name>
       </Step>
     </Request>
     <Response/>
@@ -33,6 +22,9 @@
       <Step>
         <Condition>request.header.Origin != null</Condition>
         <Name>AM-SetCORSHeaders</Name>
+      </Step>
+      <Step>
+        <Name>AM-TokenResponse</Name>
       </Step>
     </Response>
   </PostFlow>
@@ -45,45 +37,6 @@
           </Step>
       </Response>
       <Condition>request.verb == "OPTIONS" AND request.header.origin != null AND request.header.Access-Control-Request-Method != null</Condition> 
-    </Flow>
-    <Flow name="generateAccessToken">
-      <Description>Generate Access Token</Description>
-      <Request>
-        <Step>
-          <Name>JTP-Protect</Name>
-        </Step>
-        <Step>
-          <Name>EV-ExtractUserGrant</Name>
-        </Step>
-        <Step>
-          <Name>FC-JWTGenerateRS256Flow</Name>
-        </Step>
-        <Step>
-          <Name>OAuthV2-GenAccessToken</Name>
-        </Step>
-      </Request>
-      <Response>
-        <Step>
-          <Name>AM-TokenResponse</Name>
-          <Condition>oauthV2.failed = false</Condition>
-        </Step>
-      </Response>
-      <Condition>(proxy.pathsuffix MatchesPath "/accesstoken" or proxy.pathsuffix MatchesPath "/accesstoken/") and (request.verb = "POST")</Condition>
-    </Flow>
-    <Flow name="refreshAccessToken">
-      <Description>Refresh Access Token</Description>
-      <Request>
-        <Step>
-          <Name>OAuthV2-RefreshAccessToken</Name>
-        </Step>
-      </Request>
-      <Response>
-        <Step>
-          <Name>AM-TokenResponse</Name>
-          <Condition>oauthV2.failed = false</Condition>
-        </Step>
-      </Response>
-      <Condition>(proxy.pathsuffix MatchesPath "/refresh" or proxy.pathsuffix MatchesPath "/refresh/") and (request.verb = "GET")</Condition>
     </Flow>
     <Flow name="404NotFound">
       <Description>404NotFound</Description>
